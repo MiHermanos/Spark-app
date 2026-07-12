@@ -115,7 +115,14 @@ function loadFromLocalStorage() {
   const stored = localStorage.getItem("spark_app_state");
   if (stored) {
     try {
-      state = JSON.parse(stored);
+      const parsed = JSON.parse(stored);
+      // Clean merge: protect fresh mockUsers datasets while loading settings
+      state.user = { ...state.user, ...parsed.user };
+      state.swipedList = parsed.swipedList || {};
+      state.matches = parsed.matches || [];
+      state.chats = parsed.chats || {};
+      state.premiumSelectedPrice = parsed.premiumSelectedPrice || 6.99;
+      state.premiumSelectedPlan = parsed.premiumSelectedPlan || "3 Months";
     } catch (e) {
       console.error("Error parsing stored state", e);
     }
@@ -979,6 +986,7 @@ function handleLightboxClick(e) {
 
 // 10. REAL CAMERA LIVE PHOTO CAPTURE & WATERMARK
 let cameraStream = null;
+let currentFacingMode = "user";
 
 function openCamera() {
   const maxWeekly = state.user.premium ? 2 : 1;
@@ -1003,7 +1011,7 @@ function openCamera() {
 
   // Access user camera stream (Enforce in-app camera only, no gallery/upload fallback)
   navigator.mediaDevices.getUserMedia({
-    video: { facingMode: "user" },
+    video: { facingMode: currentFacingMode },
     audio: false
   }).then(stream => {
     cameraStream = stream;
@@ -1012,6 +1020,29 @@ function openCamera() {
     console.error("Camera access error:", err);
     showToast("Could not access camera. Simulating virtual viewfinder.");
     // Fallback virtual viewfinder simulation
+    simulateVirtualCamera();
+  });
+}
+
+function switchCamera() {
+  stopCameraStream();
+  currentFacingMode = currentFacingMode === "user" ? "environment" : "user";
+  
+  const video = document.getElementById("camera-video");
+  const canv = document.getElementById("virtual-cam-canvas");
+  if (canv) canv.style.display = "none";
+  video.style.display = "block";
+
+  navigator.mediaDevices.getUserMedia({
+    video: { facingMode: currentFacingMode },
+    audio: false
+  }).then(stream => {
+    cameraStream = stream;
+    video.srcObject = stream;
+    showToast(`Switched to ${currentFacingMode === "user" ? "front" : "rear"} camera`);
+  }).catch(err => {
+    console.error("Camera switch error:", err);
+    showToast("Simulating camera switch.");
     simulateVirtualCamera();
   });
 }

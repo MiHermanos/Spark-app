@@ -381,21 +381,21 @@
             <div class="feature-item"><span class="feature-icon">✦</span><div><strong>Premium badge</strong><p>Stand out in the feed</p></div></div>
           </div>
           <div class="premium-plans">
-            <div class="plan-card selected" onclick="selectPlan(this)">
-              <div class="plan-badge">Most popular</div>
-              <div class="plan-duration">3 Months</div>
-              <div class="plan-price">€7.99<span>/mo</span></div>
-            </div>
-            <div class="plan-card" onclick="selectPlan(this)">
+            <div class="plan-card" onclick="selectPlan(this, 9.99, '1 Month')">
               <div class="plan-duration">1 Month</div>
-              <div class="plan-price">€12.99<span>/mo</span></div>
+              <div class="plan-price">€9.99<span>/mo</span></div>
             </div>
-            <div class="plan-card" onclick="selectPlan(this)">
+            <div class="plan-card selected" onclick="selectPlan(this, 6.99, '3 Months')">
+              <div class="plan-badge">Best value</div>
+              <div class="plan-duration">3 Months</div>
+              <div class="plan-price">€6.99<span>/mo</span></div>
+            </div>
+            <div class="plan-card" onclick="selectPlan(this, 4.99, '12 Months')">
               <div class="plan-duration">12 Months</div>
               <div class="plan-price">€4.99<span>/mo</span></div>
             </div>
           </div>
-          <button class="btn-premium-cta" onclick="upgradePremium()">Upgrade Now — €7.99/mo</button>
+          <button class="btn-premium-cta" id="premium-cta-btn" onclick="upgradePremium()">Upgrade Now — €6.99/mo</button>
           <p class="premium-fine">Cancel anytime · Auto-renews</p>
         </div>
       </div>
