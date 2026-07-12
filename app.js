@@ -1,528 +1,568 @@
-/* =============================================
-   SPARK APP — JAVASCRIPT
-   ============================================= */
+/* ============================================================
+   SPARK — App Logic
+   ============================================================ */
 
-// ---- DATA ----
+'use strict';
+
+// ============================================================
+// DATA
+// ============================================================
+
 const PROFILES = [
   {
-    id: 1, name: "Aria", age: 26, emoji: "👩‍🦰",
-    location: "2.4 km away", bio: "Into hiking, good coffee, and terrible jokes.",
-    color: "linear-gradient(135deg,#ff9a9e,#fad0c4)",
-    daysSince: 3, likes: 142, views: 892
+    id: 1, name: 'Emma', age: 24, city: 'Amsterdam',
+    emoji: '👩', avatar: 'photos/profile_emma.jpg',
+    bio: 'Dol op koffie, boeken en lange wandelingen door de grachtjes. Zin in een echt gesprek zonder filters? 😊',
+    tags: ['Koffie ☕', 'Boeken 📚', 'Yoga 🧘', 'Festivals 🎵'],
+    distance: '3 km', premium: false,
+    photos: ['photos/profile_emma.jpg'],
+    likedBack: true,
   },
   {
-    id: 2, name: "Lena", age: 24, emoji: "🧑‍🎤",
-    location: "1.1 km away", bio: "Photographer, vinyl collector & amateur chef.",
-    color: "linear-gradient(135deg,#a18cd1,#fbc2eb)",
-    daysSince: 7, likes: 210, views: 1104
+    id: 2, name: 'Lucas', age: 26, city: 'Utrecht',
+    emoji: '👨', avatar: 'photos/profile_lucas.jpg',
+    bio: 'Chef-kok in opleiding. Ik kook voor jou als je de was doet 😄. Altijd in voor een nieuw avontuur.',
+    tags: ['Koken 🍳', 'Reizen ✈️', 'Klimmen 🧗', 'Film 🎬'],
+    distance: '8 km', premium: true,
+    photos: ['photos/profile_lucas.jpg'],
+    likedBack: false,
   },
   {
-    id: 3, name: "Jordan", age: 29, emoji: "🧑‍💻",
-    location: "5.8 km away", bio: "Software engineer who builds apps by day, plays guitar by night.",
-    color: "linear-gradient(135deg,#96fbc4,#f9f586)",
-    daysSince: 14, likes: 87, views: 450
+    id: 3, name: 'Sofia', age: 22, city: 'Rotterdam',
+    emoji: '👩‍🦱', avatar: 'photos/profile_sofia.jpg',
+    bio: 'Studeert psychologie en vraagt me af waarom mensen zo ingewikkeld zijn 🤔. Wandelen in de natuur maakt alles beter.',
+    tags: ['Natuur 🌿', 'Psych 🧠', 'Hardlopen 🏃', 'Art 🎨'],
+    distance: '15 km', premium: false,
+    photos: ['photos/profile_sofia.jpg'],
+    likedBack: true,
   },
   {
-    id: 4, name: "Sofia", age: 23, emoji: "🏃‍♀️",
-    location: "800 m away", bio: "Marathon runner. Yes, I wake up at 5am. No, I'm not sorry.",
-    color: "linear-gradient(135deg,#f6d365,#fda085)",
-    daysSince: 2, likes: 319, views: 1780
+    id: 4, name: 'James', age: 28, city: 'Den Haag',
+    emoji: '🧔', avatar: 'photos/profile_james.jpg',
+    bio: 'Architect overdag, muzikant in het weekend. Op zoek naar iemand om mee te lachen tot het te laat is.',
+    tags: ['Muziek 🎸', 'Design 🏛️', 'Wijn 🍷', 'Fietsen 🚴'],
+    distance: '22 km', premium: true,
+    photos: ['photos/profile_james.jpg'],
+    likedBack: false,
   },
   {
-    id: 5, name: "Marco", age: 27, emoji: "🧑‍🍳",
-    location: "3.2 km away", bio: "Professional chef who cooks for strangers on weekends. DM for dinner.",
-    color: "linear-gradient(135deg,#84fab0,#8fd3f4)",
-    daysSince: 21, likes: 176, views: 760
+    id: 5, name: 'Mia', age: 25, city: 'Leiden',
+    emoji: '👩‍🦰', avatar: 'photos/profile_mia.jpg',
+    bio: 'Fotografe van echte momenten. Geen poses, geen filters — net als op deze app 📸. Koffie is mijn liefde.',
+    tags: ['Fotografie 📷', 'Markt 🛒', 'Bloemen 🌸', 'Thrift 🛍️'],
+    distance: '6 km', premium: false,
+    photos: ['photos/profile_mia.jpg'],
+    likedBack: false,
   },
   {
-    id: 6, name: "Yuki", age: 25, emoji: "🎨",
-    location: "4.6 km away", bio: "Illustrator & daydreamer. My plants have names.",
-    color: "linear-gradient(135deg,#f093fb,#f5576c)",
-    daysSince: 5, likes: 251, views: 1340
+    id: 6, name: 'Alex', age: 23, city: 'Haarlem',
+    emoji: '🧑‍🦰', avatar: 'photos/profile_alex.jpg',
+    bio: 'Schrijver en dromer. Mijn ideale avond: een goed boek, warme thee en jij tegenover me.',
+    tags: ['Schrijven ✍️', 'Boeken 📖', 'Thee 🍵', 'Muziek 🎶'],
+    distance: '11 km', premium: false,
+    photos: ['photos/profile_alex.jpg'],
+    likedBack: true,
   },
-  {
-    id: 7, name: "Alex", age: 28, emoji: "🏄",
-    location: "7.1 km away", bio: "Surfer, bookworm, recovering overthinker.",
-    color: "linear-gradient(135deg,#4facfe,#00f2fe)",
-    daysSince: 10, likes: 95, views: 530
-  }
 ];
 
 const FEED_POSTS = [
   {
-    id: 1, userId: 2, username: "Lena K.", emoji: "🧑‍🎤",
-    color: "linear-gradient(135deg,#a18cd1,#fbc2eb)",
-    age: 24, location: "Copenhagen", daysSince: 7,
-    caption: "Golden hour at the pier — just me and my camera 📷",
-    likes: 34, feedColor: "linear-gradient(160deg,#a18cd1 0%,#fbc2eb 50%,#f6e2ff 100%)"
+    id: 101, userId: 1, name: 'Emma', emoji: '👩', avatar: 'photos/profile_emma.jpg', premium: false,
+    image: 'photos/profile_emma.jpg', imageEmoji: '🌅',
+    caption: 'Zondag in het Vondelpark. Niks beters dan dit ☀️',
+    likes: 47, liked: false, comments: [
+      { name: 'Lucas', emoji: '👨', text: 'Prachtig! 😍', time: '2u' },
+      { name: 'Sofia', emoji: '👩‍🦱', text: 'Ik wil ook!', time: '1u' },
+    ],
+    daysAgo: 2, matched: false, city: 'Amsterdam', age: 24,
   },
   {
-    id: 2, userId: 4, username: "Sofia M.", emoji: "🏃‍♀️",
-    color: "linear-gradient(135deg,#f6d365,#fda085)",
-    age: 23, location: "Berlin", daysSince: 2,
-    caption: "Post-race glow ✨ 42km done. Time for pizza.",
-    likes: 87, feedColor: "linear-gradient(160deg,#f6d365 0%,#fda085 60%,#ff9a5c 100%)"
+    id: 102, userId: 4, name: 'James', emoji: '🧔', avatar: 'photos/profile_james.jpg', premium: true,
+    image: 'photos/profile_james.jpg', imageEmoji: '🌆',
+    caption: 'Rooftop sessie met de band. Donderdag = beste dag van de week 🎸',
+    likes: 82, liked: false, comments: [
+      { name: 'Mia', emoji: '👩‍🦰', text: 'Die band is echt goed!', time: '3u' },
+      { name: 'Alex', emoji: '🧑‍🦰', text: 'Wanneer is het concert? 🎶', time: '30m' },
+    ],
+    daysAgo: 5, matched: false, city: 'Den Haag', age: 28,
   },
   {
-    id: 3, userId: 6, username: "Yuki T.", emoji: "🎨",
-    color: "linear-gradient(135deg,#f093fb,#f5576c)",
-    age: 25, location: "Tokyo → Amsterdam", daysSince: 5,
-    caption: "New studio vibes. Living in organised chaos 🌸",
-    likes: 56, feedColor: "linear-gradient(160deg,#f093fb 0%,#f5576c 50%,#ff8fa3 100%)"
+    id: 103, userId: 3, name: 'Sofia', emoji: '👩‍🦱', avatar: 'photos/profile_sofia.jpg', premium: false,
+    image: 'photos/profile_sofia.jpg', imageEmoji: '🌲',
+    caption: 'Kilometer 15 van de trail run. Mijn benen haten me, mijn hoofd is dankbaar 🏃‍♀️',
+    likes: 61, liked: false, comments: [
+      { name: 'Emma', emoji: '👩', text: 'Held! 💪', time: '4u' },
+    ],
+    daysAgo: 3, matched: false, city: 'Rotterdam', age: 22,
   },
   {
-    id: 4, userId: 7, username: "Alex R.", emoji: "🏄",
-    color: "linear-gradient(135deg,#4facfe,#00f2fe)",
-    age: 28, location: "Barcelona", daysSince: 10,
-    caption: "Caught an actual wave today. Progress! 🌊",
-    likes: 29, feedColor: "linear-gradient(160deg,#4facfe 0%,#00f2fe 60%,#8efff1 100%)"
+    id: 104, userId: 2, name: 'Lucas', emoji: '👨', avatar: 'photos/profile_lucas.jpg', premium: true,
+    image: 'photos/profile_lucas.jpg', imageEmoji: '☕',
+    caption: 'Zondagmorgen pasta. Thuis koken is de beste therapie 🍝',
+    likes: 93, liked: false, comments: [
+      { name: 'James', emoji: '🧔', text: 'Dat ziet er heerlijk uit! 😋', time: '5u' },
+      { name: 'Sofia', emoji: '👩‍🦱', text: 'Recept pls!', time: '2u' },
+    ],
+    daysAgo: 7, matched: false, city: 'Utrecht', age: 26,
   },
   {
-    id: 5, userId: 1, username: "Aria V.", emoji: "👩‍🦰",
-    color: "linear-gradient(135deg,#ff9a9e,#fad0c4)",
-    age: 26, location: "Paris", daysSince: 3,
-    caption: "Found the most perfect little café. The croissants are life-changing 🥐",
-    likes: 112, feedColor: "linear-gradient(160deg,#ff9a9e 0%,#fad0c4 60%,#ffe8e8 100%)"
-  }
+    id: 105, userId: 5, name: 'Mia', emoji: '👩‍🦰', avatar: 'photos/profile_mia.jpg', premium: false,
+    image: 'photos/profile_mia.jpg', imageEmoji: '🌺',
+    caption: 'Zaterdagmorgen op de markt. Verse bloemen maken alles beter 🌸',
+    likes: 54, liked: false, comments: [
+      { name: 'Emma', emoji: '👩', text: 'Zo mooi!! 🌷', time: '6u' },
+    ],
+    daysAgo: 4, matched: false, city: 'Leiden', age: 25,
+  },
+  {
+    id: 106, userId: 6, name: 'Alex', emoji: '🧑‍🦰', avatar: 'photos/profile_alex.jpg', premium: false,
+    image: 'photos/profile_alex.jpg', imageEmoji: '📚',
+    caption: 'Nieuwe aanwinst in mijn favoriete boekwinkel. Ik was er voor 20 minuten... 3 uur later 😅',
+    likes: 38, liked: false, comments: [
+      { name: 'Emma', emoji: '👩', text: 'Welk boek? 📖', time: '1u' },
+      { name: 'Lucas', emoji: '👨', text: 'Typisch bookworm 😄', time: '30m' },
+    ],
+    daysAgo: 1, matched: false, city: 'Haarlem', age: 23,
+  },
 ];
 
 const MATCHES = [
-  { id: 1, name: "Aria", emoji: "👩‍🦰", color: "linear-gradient(135deg,#ff9a9e,#fad0c4)", lastMsg: "Haha that's so true! ☀️", time: "2m" },
-  { id: 2, name: "Lena", emoji: "🧑‍🎤", color: "linear-gradient(135deg,#a18cd1,#fbc2eb)", lastMsg: "We should grab coffee sometime!", time: "1h" },
-  { id: 3, name: "Sofia", emoji: "🏃‍♀️", color: "linear-gradient(135deg,#f6d365,#fda085)", lastMsg: null, time: "now" },
-  { id: 4, name: "Jordan", emoji: "🧑‍💻", color: "linear-gradient(135deg,#96fbc4,#f9f586)", lastMsg: null, time: "3h" },
-  { id: 5, name: "Marco", emoji: "🧑‍🍳", color: "linear-gradient(135deg,#84fab0,#8fd3f4)", lastMsg: "Great taste in music btw 🎵", time: "2d" }
+  { id: 1, name: 'Emma', emoji: '👩', avatar: 'photos/profile_emma.jpg', lastMsg: 'Hoi! Leuk dat we een match hebben 😊', time: '2m', unread: 2, online: true },
+  { id: 3, name: 'Sofia', emoji: '👩‍🦱', avatar: 'photos/profile_sofia.jpg', lastMsg: 'Wanneer ga jij weer hardlopen?', time: '1u', unread: 1, online: true },
+  { id: 6, name: 'Alex', emoji: '🧑‍🦰', avatar: 'photos/profile_alex.jpg', lastMsg: 'Heb je dat boek al gelezen?', time: '3u', unread: 0, online: false },
 ];
 
-const CHAT_HISTORIES = {
+const CHAT_HISTORY = {
   1: [
-    { text: "Oh wow, I literally do the same thing every Sunday 😄", sent: false, time: "2:14 PM" },
-    { text: "Ha! Great minds 🙌 What else do you get up to?", sent: true, time: "2:15 PM" },
-    { text: "Mostly hiking, and trying new coffee places. You?", sent: false, time: "2:16 PM" },
-    { text: "Same honestly. There's a great trail near Vondelpark", sent: true, time: "2:18 PM" },
-    { text: "Haha that's so true! ☀️", sent: false, time: "2:19 PM" }
+    { sent: false, text: 'Hoi! Leuk dat we een match hebben 😊', time: '14:32' },
+    { sent: true, text: 'Hii! Jij ook! Ik zag je foto in het park, zo leuk!', time: '14:33' },
+    { sent: false, text: 'Dankjewel! Vondelpark is mijn favoriet ☀️', time: '14:35' },
+    { sent: true, text: 'Ga jij daar vaker naartoe?', time: '14:36' },
+    { sent: false, text: 'Bijna elk weekend! Jij ook?', time: '14:37' },
   ],
-  2: [
-    { text: "Hey! Loved your latest photo — really cool lighting", sent: true, time: "11:02 AM" },
-    { text: "Aw thanks! Totally accidental but I'll take it 😂", sent: false, time: "11:08 AM" },
-    { text: "We should grab coffee sometime!", sent: false, time: "11:09 AM" }
+  3: [
+    { sent: false, text: 'Hey! Jij was ook aan het hardlopen vandaag?', time: '11:00' },
+    { sent: true, text: 'Nee haha, maar ik was wel op de fiets 😄', time: '11:05' },
+    { sent: false, text: 'Wanneer ga jij weer hardlopen?', time: '11:10' },
   ],
-  5: [
-    { text: "Love your taste in music btw 🎵", sent: false, time: "Yesterday" }
-  ]
+  6: [
+    { sent: false, text: 'Heb je dat boek al gelezen?', time: 'Gisteren' },
+    { sent: true, text: 'Welk boek bedoel je?', time: 'Gisteren' },
+  ],
 };
 
-// ---- STATE ----
+// ============================================================
+// STATE
+// ============================================================
+
 let state = {
-  currentUser: null,
-  currentView: 'swipe',
-  cards: [],
-  cardIndex: 0,
-  isPremium: false,
-  weeklyPhotos: 1,
-  chatPartner: null,
-  likedFeedPosts: new Set(),
-  hasCameraStream: false
+  currentPage: 'splash',
+  activeTab: 'swipe',
+  user: null,
+  swipeIndex: 0,
+  isDragging: false,
+  startX: 0, startY: 0,
+  currentX: 0, currentY: 0,
+  activeCard: null,
+  swipedCards: [],
+  currentCommentPostId: null,
+  currentChatUserId: null,
+  pendingMatchUser: null,
+  cameraStream: null,
+  cameraFacingMode: 'user',
+  capturedPhoto: null,
+  matchedUserIds: [1, 3, 6],
+  filtersVisible: false,
+  feedLikes: {},
+  feedComments: {},
+  chatMessages: JSON.parse(JSON.stringify(CHAT_HISTORY)),
 };
 
-let cameraStream = null;
-let capturedPhotoData = null;
-let currentMatch = null;
+// ============================================================
+// NAVIGATION
+// ============================================================
 
-// ---- DRAGGING STATE ----
-let drag = {
-  active: false,
-  card: null,
-  startX: 0,
-  startY: 0,
-  currentX: 0,
-  currentY: 0
-};
+function showPage(page) {
+  const pages = ['splash', 'login', 'register'];
+  document.querySelectorAll('.splash-screen, .page').forEach(el => {
+    el.classList.remove('active');
+    el.style.display = '';
+  });
+  if (page === 'splash') {
+    document.getElementById('splash-screen').classList.add('active');
+  } else {
+    const el = document.getElementById(`${page}-page`);
+    if (el) el.style.display = 'flex';
+  }
+  state.currentPage = page;
+}
 
-// ==============================================
-// INIT
-// ==============================================
-document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => {
-    document.getElementById('splash-screen').classList.add('hidden');
-    document.getElementById('auth-screen').classList.remove('hidden');
-  }, 2200);
-});
+function switchTab(tab) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const tabEl = document.getElementById(`tab-${tab}`);
+  if (tabEl) tabEl.classList.add('active');
+  const navEl = document.getElementById(`nav-${tab}`);
+  if (navEl) navEl.classList.add('active');
+  state.activeTab = tab;
+  if (tab === 'feed') renderFeed();
+  if (tab === 'matches') renderMatches();
+  if (tab === 'chat') renderChatList();
+}
 
-// ==============================================
+// ============================================================
 // AUTH
-// ==============================================
-function showSignup() {
-  document.getElementById('login-panel').classList.add('hidden');
-  document.getElementById('signup-panel').classList.remove('hidden');
-}
-function showLogin() {
-  document.getElementById('signup-panel').classList.add('hidden');
-  document.getElementById('login-panel').classList.remove('hidden');
-}
+// ============================================================
 
 function doLogin() {
   const email = document.getElementById('login-email').value.trim();
-  if (!email) { showToast("Please enter your email 📧"); return; }
-  state.currentUser = {
-    name: email.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
-    email,
-    emoji: "⚡",
-    color: "var(--spark-gradient)"
-  };
-  initApp();
+  const pass = document.getElementById('login-pass').value;
+  if (!email || !pass) { showToast('❌ Vul alle velden in'); return; }
+  state.user = { name: 'Emma', age: 24, email, premium: false };
+  enterApp();
 }
 
-function doSignup() {
-  const name = document.getElementById('signup-name').value.trim();
-  const email = document.getElementById('signup-email').value.trim();
-  if (!name || !email) { showToast("Please fill in all fields ✏️"); return; }
-  state.currentUser = { name, email, emoji: "⚡", color: "var(--spark-gradient)" };
-  initApp();
+function doRegister() {
+  const name = document.getElementById('reg-name').value.trim();
+  const age  = document.getElementById('reg-age').value;
+  const email= document.getElementById('reg-email').value.trim();
+  const pass = document.getElementById('reg-pass').value;
+  if (!name || !age || !email || !pass) { showToast('❌ Vul alle velden in'); return; }
+  if (parseInt(age) < 18) { showToast('❌ Je moet 18+ zijn'); return; }
+  state.user = { name, age: parseInt(age), email, premium: false };
+  enterApp();
 }
 
-function doLogout() {
-  state.currentUser = null;
-  closeOverlay('profile-screen');
-  document.getElementById('app').classList.add('hidden');
-  document.getElementById('auth-screen').classList.remove('hidden');
-  showToast("Signed out 👋");
-}
-
-// ==============================================
-// APP INIT
-// ==============================================
-function initApp() {
-  document.getElementById('auth-screen').classList.add('hidden');
+function enterApp() {
+  document.querySelectorAll('.splash-screen, .page').forEach(el => {
+    el.classList.remove('active');
+    el.style.display = 'none';
+  });
   document.getElementById('app').classList.remove('hidden');
-
-  // Set user avatar initials
-  const mini = document.getElementById('user-avatar-mini');
-  mini.textContent = state.currentUser.name.charAt(0).toUpperCase();
-
-  // Build card stack
-  state.cards = [...PROFILES];
-  buildCardStack();
-
-  // Build feed
-  buildFeed();
-
-  // Profile info
-  document.getElementById('profile-name-age').textContent =
-    `${state.currentUser.name}, 26`;
-
-  buildProfileGrid();
-  updateProfileStats();
-  updateExpiryNotice();
+  document.getElementById('own-name').textContent = `${state.user.name}, ${state.user.age}`;
+  initSwipeCards();
+  showToast(`✦ Welkom, ${state.user.name}!`);
 }
 
-// ==============================================
-// VIEW SWITCHING
-// ==============================================
-function switchView(view) {
-  state.currentView = view;
-  document.getElementById('swipe-view').classList.toggle('hidden', view !== 'swipe');
-  document.getElementById('feed-view').classList.toggle('hidden', view !== 'feed');
-  document.getElementById('btn-swipe').classList.toggle('active', view === 'swipe');
-  document.getElementById('btn-feed').classList.toggle('active', view === 'feed');
+function logout() {
+  state.user = null;
+  document.getElementById('app').classList.add('hidden');
+  showPage('splash');
+  showToast('Tot ziens! 👋');
 }
 
-// ==============================================
-// BOTTOM NAV
-// ==============================================
-function navTo(section) {
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById(`nav-${section === 'home' ? 'home' : section}`).classList.add('active');
+// ============================================================
+// SWIPE
+// ============================================================
 
-  if (section === 'home') { /* already on home */ return; }
-  if (section === 'matches') {
-    buildMatchesList();
-    document.getElementById('matches-screen').classList.remove('hidden');
-    document.getElementById('match-badge').classList.add('hidden');
-  }
-  if (section === 'chat') {
-    buildMatchesList();
-    document.getElementById('matches-screen').classList.remove('hidden');
-  }
-  if (section === 'profile') {
-    buildProfileGrid();
-    document.getElementById('profile-screen').classList.remove('hidden');
-  }
+function getSwipeProfiles() {
+  return PROFILES.slice(state.swipeIndex);
 }
 
-function closeOverlay(id) {
-  document.getElementById(id).classList.add('hidden');
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('nav-home').classList.add('active');
-}
-
-function showProfile() { navTo('profile'); }
-function showNotifications() { showToast("⚡ 3 new sparks this week!"); }
-function showPremium() {
-  document.getElementById('premium-screen').classList.remove('hidden');
-}
-
-// ==============================================
-// CARD STACK
-// ==============================================
-function buildCardStack() {
-  const stack = document.getElementById('card-stack');
+function initSwipeCards() {
+  const stack = document.getElementById('cards-stack');
   stack.innerHTML = '';
-
-  if (state.cardIndex >= state.cards.length) {
-    document.getElementById('out-of-cards').classList.remove('hidden');
+  const profiles = getSwipeProfiles();
+  if (profiles.length === 0) {
+    renderNoMoreCards();
     return;
   }
-
-  document.getElementById('out-of-cards').classList.add('hidden');
-
-  // Show up to 3 cards
-  const visible = state.cards.slice(state.cardIndex, state.cardIndex + 3).reverse();
-
-  visible.forEach((profile, i) => {
-    const card = createCard(profile);
+  const toRender = profiles.slice(0, 3);
+  for (let i = toRender.length - 1; i >= 0; i--) {
+    const card = createSwipeCard(toRender[i], i);
     stack.appendChild(card);
-  });
-
-  // Add drag to top card
-  const topCard = stack.lastElementChild;
-  if (topCard) addDragListeners(topCard);
+  }
+  setupCardDrag();
 }
 
-function createCard(profile) {
-  const card = document.createElement('div');
-  card.className = 'swipe-card';
-  card.dataset.id = profile.id;
+function createSwipeCard(profile, index) {
+  const div = document.createElement('div');
+  div.className = 'swipe-card';
+  div.dataset.profileId = profile.id;
 
-  const freshness = profile.daysSince === 1 ? "Posted today" :
-    profile.daysSince < 7 ? `Posted ${profile.daysSince}d ago` : `Posted ${Math.ceil(profile.daysSince/7)}w ago`;
+  const bgColors = ['linear-gradient(135deg,#e91e8c,#7c3aed)','linear-gradient(135deg,#ff6b35,#e91e8c)','linear-gradient(135deg,#7c3aed,#4f46e5)','linear-gradient(135deg,#0ea5e9,#7c3aed)','linear-gradient(135deg,#f59e0b,#e91e8c)','linear-gradient(135deg,#10b981,#0ea5e9)'];
+  const bg = bgColors[profile.id % bgColors.length];
 
-  card.innerHTML = `
-    <div class="card-photo-placeholder" style="background:${profile.color}">
-      <span style="font-size:96px">${profile.emoji}</span>
+  div.innerHTML = `
+    <img class="card-photo" src="${profile.avatar}" alt="${profile.name}" 
+      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+    <div class="card-photo-fallback" style="background:${bg};display:none;">
+      <span style="font-size:100px">${profile.emoji}</span>
     </div>
     <div class="card-gradient"></div>
+    <div class="card-photo-age">${profile.age} · ${profile.city}</div>
     <div class="card-info">
-      <div class="card-name">${profile.name}<span class="card-age">${profile.age}</span></div>
-      <div class="card-location">📍 ${profile.location}</div>
-      <div class="card-bio">${profile.bio}</div>
-      <div class="card-freshness"><div class="freshness-dot"></div>${freshness}</div>
+      <div class="card-name">${profile.name} ${profile.premium ? '<span style="font-size:14px;color:var(--purple-l)">⚡</span>' : ''}</div>
+      <div class="card-details">
+        <div class="card-detail-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${profile.distance} weg</div>
+        ${state.matchedUserIds.includes(profile.id) ? '<div class="card-detail-item" style="color:#4cfe8a">✓ Match!</div>' : ''}
+      </div>
+      <div class="card-tags">
+        ${profile.tags.slice(0,3).map(t=>`<span class="card-tag">${t}</span>`).join('')}
+      </div>
     </div>
-    <div class="card-like-indicator">LIKE</div>
-    <div class="card-pass-indicator">NOPE</div>
-    <div class="card-super-indicator">⚡ SUPER</div>
+    <div class="stamp stamp-like">LIKE</div>
+    <div class="stamp stamp-nope">NOPE</div>
+    <div class="stamp stamp-super">SUPER</div>
   `;
-  return card;
+
+  // Tap to open profile
+  div.addEventListener('click', (e) => {
+    if (!state.isDragging) openUserProfile(profile.id);
+  });
+
+  return div;
 }
 
-// ==============================================
-// DRAG / SWIPE
-// ==============================================
-function addDragListeners(card) {
-  card.addEventListener('mousedown', startDrag);
-  card.addEventListener('touchstart', startDrag, { passive: true });
+function renderNoMoreCards() {
+  const stack = document.getElementById('cards-stack');
+  stack.innerHTML = `
+    <div class="no-more-cards">
+      <div style="font-size:64px">✦</div>
+      <h3>Je hebt iedereen gezien!</h3>
+      <p>Kom later terug voor nieuwe profielen in jouw buurt</p>
+      <button class="refresh-cards-btn" onclick="resetCards()">Opnieuw bekijken</button>
+    </div>
+  `;
 }
 
-function startDrag(e) {
-  const stack = document.getElementById('card-stack');
-  drag.card = stack.lastElementChild;
-  if (!drag.card) return;
-
-  drag.active = true;
-  drag.startX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
-  drag.startY = e.type === 'mousedown' ? e.clientY : e.touches[0].clientY;
-
-  document.addEventListener('mousemove', onDrag);
-  document.addEventListener('mouseup', endDrag);
-  document.addEventListener('touchmove', onDrag, { passive: true });
-  document.addEventListener('touchend', endDrag);
+function resetCards() {
+  state.swipeIndex = 0;
+  state.swipedCards = [];
+  initSwipeCards();
 }
 
-function onDrag(e) {
-  if (!drag.active || !drag.card) return;
-  const clientX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
-  const clientY = e.type === 'mousemove' ? e.clientY : e.touches[0].clientY;
-
-  drag.currentX = clientX - drag.startX;
-  drag.currentY = clientY - drag.startY;
-
-  const rotate = drag.currentX * 0.08;
-  drag.card.style.transform = `translate(${drag.currentX}px, ${drag.currentY}px) rotate(${rotate}deg)`;
-  drag.card.style.transition = 'none';
-
-  // Show indicators
-  const likeInd = drag.card.querySelector('.card-like-indicator');
-  const passInd = drag.card.querySelector('.card-pass-indicator');
-  const superInd = drag.card.querySelector('.card-super-indicator');
-
-  const threshold = 60;
-  if (drag.currentX > threshold) {
-    likeInd.style.opacity = Math.min((drag.currentX - threshold) / 80, 1);
-    passInd.style.opacity = 0; superInd.style.opacity = 0;
-  } else if (drag.currentX < -threshold) {
-    passInd.style.opacity = Math.min((-drag.currentX - threshold) / 80, 1);
-    likeInd.style.opacity = 0; superInd.style.opacity = 0;
-  } else if (drag.currentY < -threshold) {
-    superInd.style.opacity = Math.min((-drag.currentY - threshold) / 80, 1);
-    likeInd.style.opacity = 0; passInd.style.opacity = 0;
-  } else {
-    likeInd.style.opacity = passInd.style.opacity = superInd.style.opacity = 0;
-  }
+function getTopCard() {
+  const stack = document.getElementById('cards-stack');
+  return stack.querySelector('.swipe-card:last-child');
 }
 
-function endDrag(e) {
-  if (!drag.active || !drag.card) return;
-  drag.active = false;
+function setupCardDrag() {
+  const card = getTopCard();
+  if (!card) return;
 
-  document.removeEventListener('mousemove', onDrag);
-  document.removeEventListener('mouseup', endDrag);
-  document.removeEventListener('touchmove', onDrag);
-  document.removeEventListener('touchend', endDrag);
+  let startX, startY, currentX = 0, currentY = 0;
+  let isDragging = false;
+  let animating = false;
 
-  const threshold = 100;
-  const superThreshold = 80;
-
-  if (drag.currentX > threshold) {
-    animateCardOut(drag.card, 'right');
-  } else if (drag.currentX < -threshold) {
-    animateCardOut(drag.card, 'left');
-  } else if (drag.currentY < -superThreshold) {
-    animateCardOut(drag.card, 'up');
-  } else {
-    // Snap back
-    drag.card.style.transition = 'transform 0.4s cubic-bezier(0.34,1.56,0.64,1)';
-    drag.card.style.transform = '';
-    drag.card.querySelectorAll('.card-like-indicator,.card-pass-indicator,.card-super-indicator').forEach(el => el.style.opacity = 0);
+  function onStart(e) {
+    if (animating) return;
+    isDragging = true;
+    state.isDragging = false;
+    const point = e.touches ? e.touches[0] : e;
+    startX = point.clientX;
+    startY = point.clientY;
+    card.style.transition = 'none';
   }
 
-  drag.card = null;
-  drag.currentX = 0;
-  drag.currentY = 0;
+  function onMove(e) {
+    if (!isDragging) return;
+    e.preventDefault();
+    const point = e.touches ? e.touches[0] : e;
+    currentX = point.clientX - startX;
+    currentY = point.clientY - startY;
+    if (Math.abs(currentX) > 5 || Math.abs(currentY) > 5) state.isDragging = true;
+
+    const rotate = currentX * 0.08;
+    const scale = 1 - Math.min(Math.abs(currentX) / 1000, 0.05);
+    card.style.transform = `translate(${currentX}px, ${currentY}px) rotate(${rotate}deg) scale(${scale})`;
+
+    // Stamp visibility
+    const likeStamp  = card.querySelector('.stamp-like');
+    const nopeStamp  = card.querySelector('.stamp-nope');
+    const superStamp = card.querySelector('.stamp-super');
+    const ratio = currentX / 120;
+    const yRatio = currentY / -80;
+
+    if (currentY < -60 && Math.abs(currentX) < 60) {
+      superStamp.style.opacity = Math.min(yRatio, 1);
+      likeStamp.style.opacity  = 0;
+      nopeStamp.style.opacity  = 0;
+    } else if (currentX > 0) {
+      likeStamp.style.opacity  = Math.min(ratio, 1);
+      nopeStamp.style.opacity  = 0;
+      superStamp.style.opacity = 0;
+    } else {
+      nopeStamp.style.opacity  = Math.min(-ratio, 1);
+      likeStamp.style.opacity  = 0;
+      superStamp.style.opacity = 0;
+    }
+
+    // Stack cards
+    const stack = document.getElementById('cards-stack');
+    const cards = stack.querySelectorAll('.swipe-card');
+    const progress = Math.min(Math.abs(currentX) / 150, 1);
+    cards.forEach((c, i) => {
+      if (c === card) return;
+      const baseScale = 1 - (cards.length - 1 - i) * 0.05;
+      const baseY = (cards.length - 1 - i) * 12;
+      const newScale = baseScale + (1 - baseScale) * progress;
+      const newY = baseY - baseY * progress;
+      c.style.transform = `scale(${newScale}) translateY(${newY}px)`;
+      c.style.transition = 'none';
+    });
+  }
+
+  function onEnd(e) {
+    if (!isDragging) return;
+    isDragging = false;
+    const threshold = 100;
+    const swipeUp = currentY < -80 && Math.abs(currentX) < 80;
+
+    if (swipeUp) {
+      triggerSwipe('up', card, currentX, currentY);
+    } else if (currentX > threshold) {
+      triggerSwipe('right', card, currentX, currentY);
+    } else if (currentX < -threshold) {
+      triggerSwipe('left', card, currentX, currentY);
+    } else {
+      card.style.transition = 'transform 0.4s cubic-bezier(0.34,1.56,0.64,1)';
+      card.style.transform = '';
+      card.querySelectorAll('.stamp').forEach(s => s.style.opacity = 0);
+      const stack = document.getElementById('cards-stack');
+      stack.querySelectorAll('.swipe-card').forEach((c, i) => {
+        if (c === card) return;
+        c.style.transition = 'transform 0.4s ease';
+        c.style.transform = '';
+      });
+    }
+    currentX = 0; currentY = 0;
+  }
+
+  card.addEventListener('mousedown', onStart);
+  card.addEventListener('touchstart', onStart, { passive: false });
+  window.addEventListener('mousemove', onMove);
+  window.addEventListener('touchmove', onMove, { passive: false });
+  window.addEventListener('mouseup', onEnd);
+  window.addEventListener('touchend', onEnd);
 }
 
-function animateCardOut(card, direction) {
-  const windowW = window.innerWidth;
-  let tx = 0, ty = 0, rot = 0;
+function triggerSwipe(direction, card, fromX, fromY) {
+  if (!card) card = getTopCard();
+  if (!card) return;
 
-  if (direction === 'right') { tx = windowW + 100; rot = 20; }
-  else if (direction === 'left') { tx = -(windowW + 100); rot = -20; }
-  else if (direction === 'up') { ty = -(window.innerHeight + 100); }
+  const profileId = parseInt(card.dataset.profileId);
+  const profile = PROFILES.find(p => p.id === profileId);
+  state.swipedCards.push({ profileId, direction });
 
-  card.style.transition = 'transform 0.45s ease-in, opacity 0.45s ease-in';
-  card.style.transform = `translate(${tx}px, ${ty}px) rotate(${rot}deg)`;
+  let tx = 0, ty = 0, rotate = 0;
+  if (direction === 'right') { tx = window.innerWidth + 200; rotate = 30; }
+  else if (direction === 'left') { tx = -window.innerWidth - 200; rotate = -30; }
+  else if (direction === 'up')  { tx = (fromX || 0); ty = -window.innerHeight - 200; rotate = 0; }
+
+  card.style.transition = 'transform 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease';
+  card.style.transform = `translate(${tx}px, ${ty}px) rotate(${rotate}deg)`;
   card.style.opacity = '0';
 
-  const profile = state.cards[state.cardIndex];
-  state.cardIndex++;
+  if (direction === 'right' && profile) {
+    if (profile.likedBack || state.matchedUserIds.includes(profileId)) {
+      setTimeout(() => showMatchOverlay(profile), 400);
+    } else {
+      showToast(`💜 Je liket ${profile.name}!`);
+    }
+  } else if (direction === 'left') {
+    showToast(`✕ Overgeslagen`);
+  } else if (direction === 'up') {
+    showToast(`⭐ Super Like gestuurd!`);
+    if (profile) setTimeout(() => showMatchOverlay(profile), 400);
+  }
 
   setTimeout(() => {
     card.remove();
-    buildCardStack();
-  }, 450);
-
-  if (direction === 'right') handleLike(profile);
-  else if (direction === 'up') handleSuperSpark(profile);
-  else handlePass(profile);
+    state.swipeIndex++;
+    const stack = document.getElementById('cards-stack');
+    // Reset remaining cards' transitions
+    stack.querySelectorAll('.swipe-card').forEach((c, idx) => {
+      c.style.transition = 'transform 0.3s ease';
+      c.style.transform = '';
+    });
+    // Load next card if available
+    const nextProfile = PROFILES[state.swipeIndex + 2];
+    if (nextProfile) {
+      const newCard = createSwipeCard(nextProfile, 0);
+      stack.insertBefore(newCard, stack.firstChild);
+    }
+    if (stack.querySelectorAll('.swipe-card').length === 0) {
+      renderNoMoreCards();
+    } else {
+      setupCardDrag();
+    }
+  }, 500);
 }
 
 function swipeCard(direction) {
-  const stack = document.getElementById('card-stack');
-  const topCard = stack.lastElementChild;
-  if (!topCard || topCard.id === 'out-of-cards') return;
+  const card = getTopCard();
+  if (!card) return;
+  let fromX = 0, fromY = 0;
+  if (direction === 'right') fromX = 100;
+  if (direction === 'left') fromX = -100;
+  if (direction === 'up') fromY = -100;
+  triggerSwipe(direction, card, fromX, fromY);
+}
 
-  // Animate button
-  const btnMap = { right: 'btn-like', left: 'btn-pass', up: 'btn-super' };
-  const btn = document.getElementById(btnMap[direction]);
-  if (btn) {
-    btn.style.transform = 'scale(0.85)';
-    setTimeout(() => btn.style.transform = '', 200);
+function rewindCard() {
+  if (state.swipedCards.length === 0) { showToast('❌ Niets om terug te spoelen'); return; }
+  if (!state.user?.premium) { showPremium(); return; }
+  showToast('↩️ Teruggespoeld!');
+}
+
+// ============================================================
+// MATCH OVERLAY
+// ============================================================
+
+function showMatchOverlay(profile) {
+  state.pendingMatchUser = profile;
+  const overlay = document.getElementById('match-overlay');
+  const img = document.getElementById('match-other-avatar');
+  img.src = profile.avatar;
+  img.onerror = () => { img.style.display='none'; };
+  overlay.classList.remove('hidden');
+  createFireworks();
+  if (!state.matchedUserIds.includes(profile.id)) {
+    state.matchedUserIds.push(profile.id);
   }
-
-  animateCardOut(topCard, direction);
 }
 
-function handleLike(profile) {
-  // Random match ~40%
-  if (Math.random() < 0.4) {
-    setTimeout(() => triggerMatch(profile), 200);
-  }
-}
-
-function handleSuperSpark(profile) {
-  showToast(`⚡ Super Spark sent to ${profile.name}!`);
-  setTimeout(() => triggerMatch(profile), 600);
-}
-
-function handlePass(profile) {
-  // Silent pass
-}
-
-function reloadCards() {
-  state.cardIndex = 0;
-  buildCardStack();
-}
-
-// ==============================================
-// MATCH
-// ==============================================
-function triggerMatch(profile) {
-  currentMatch = profile;
-  document.getElementById('match-name-display').textContent = profile.name;
-
-  const avatarYou = document.getElementById('match-avatar-you');
-  const avatarThem = document.getElementById('match-avatar-them');
-
-  avatarYou.textContent = state.currentUser.name.charAt(0).toUpperCase();
-  avatarThem.textContent = profile.emoji;
-  avatarThem.style.background = profile.color;
-
-  launchParticles();
-  document.getElementById('match-overlay').classList.remove('hidden');
-}
-
-function closeMatchOverlay() {
+function closeMatch() {
   document.getElementById('match-overlay').classList.add('hidden');
-  stopParticles();
-  currentMatch = null;
+  state.pendingMatchUser = null;
 }
 
-function launchParticles() {
-  const container = document.getElementById('match-particles');
-  container.innerHTML = '';
-  const colors = ['#ff6b35','#e91e8c','#ffb347','#ff6b9d','#fff'];
-
-  for (let i = 0; i < 30; i++) {
-    const p = document.createElement('div');
-    p.className = 'match-particle';
-    const size = Math.random() * 10 + 4;
-    const color = colors[Math.floor(Math.random() * colors.length)];
-    const delay = Math.random() * 2;
-    const duration = Math.random() * 3 + 2;
-    const left = Math.random() * 100;
-
-    p.style.cssText = `
-      width:${size}px; height:${size}px;
-      background:${color};
-      left:${left}%;
-      animation-duration:${duration}s;
-      animation-delay:${delay}s;
-      opacity:0;
-    `;
-    container.appendChild(p);
+function openMatchChat() {
+  closeMatch();
+  if (state.pendingMatchUser) {
+    openChat(state.pendingMatchUser.id);
   }
 }
 
-function stopParticles() {
-  document.getElementById('match-particles').innerHTML = '';
+function createFireworks() {
+  const container = document.getElementById('match-fireworks');
+  container.innerHTML = '';
+  const colors = ['#e91e8c','#7c3aed','#ff6b35','#4fc3f7','#4cfe8a','#f59e0b'];
+  for (let i = 0; i < 40; i++) {
+    const fw = document.createElement('div');
+    fw.className = 'firework';
+    const x = (Math.random() - 0.5) * window.innerWidth * 1.5;
+    const y = (Math.random() - 0.5) * window.innerHeight * 1.5;
+    fw.style.cssText = `
+      left: 50%; top: 50%;
+      background: ${colors[Math.floor(Math.random() * colors.length)]};
+      --tx: ${x}px; --ty: ${y}px;
+      animation-delay: ${Math.random() * 0.5}s;
+      width: ${Math.random() * 8 + 4}px;
+      height: ${Math.random() * 8 + 4}px;
+    `;
+    container.appendChild(fw);
+  }
 }
 
-// ==============================================
+// ============================================================
 // FEED
-// ==============================================
-function buildFeed() {
+// ============================================================
+
+function renderFeed() {
   const container = document.getElementById('feed-container');
   container.innerHTML = '';
-
   FEED_POSTS.forEach(post => {
     const el = createFeedPost(post);
     container.appendChild(el);
@@ -530,428 +570,547 @@ function buildFeed() {
 }
 
 function createFeedPost(post) {
-  const article = document.createElement('article');
-  article.className = 'feed-post';
-  article.dataset.id = post.id;
+  const daysLeft = 30 - post.daysAgo;
+  const expiryPct = (daysLeft / 30) * 100;
+  const isMatched = state.matchedUserIds.includes(post.userId);
+  const likeCount = (state.feedLikes[post.id] ?? post.likes);
+  const liked = post.liked;
+  const commentCount = post.comments.length + (state.feedComments[post.id]?.length || 0);
 
-  const timeAgo = post.daysSince < 2 ? `${post.daysSince * 24}h ago` : `${post.daysSince}d ago`;
-  const freshLabel = post.daysSince <= 7 ? "Fresh ✓" : `${post.daysSince}d old`;
+  const div = document.createElement('div');
+  div.className = 'feed-post';
+  div.dataset.postId = post.id;
 
-  article.innerHTML = `
-    <div class="feed-post-header">
-      <div class="feed-avatar" style="background:${post.color}">
-        ${post.emoji}
+  div.innerHTML = `
+    <div class="post-header">
+      <div class="post-user" onclick="openUserProfile(${post.userId})">
+        <img class="post-avatar" src="${post.avatar}" alt="${post.name}" 
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="post-avatar-fallback" style="display:none; background:var(--surface2)">${post.emoji}</div>
+        <div class="post-user-info">
+          <span class="post-username">${post.name}, ${post.age} ${post.premium ? '<span class="premium-star">⚡</span>' : ''}</span>
+          <span class="post-meta">📍 ${post.city} · ${post.daysAgo === 0 ? 'Vandaag' : post.daysAgo + 'd geleden'} · Nog ${daysLeft}d zichtbaar</span>
+        </div>
       </div>
-      <div class="feed-user-info">
-        <div class="feed-username">${post.username}</div>
-        <div class="feed-meta">${post.age} • ${post.location} • ${timeAgo}</div>
-      </div>
-      <div class="feed-fresh-badge">
-        <span style="width:6px;height:6px;border-radius:50%;background:#4ade80;display:inline-block;"></span>
-        ${freshLabel}
+      <button class="post-more-btn">⋯</button>
+    </div>
+    <div class="post-image-wrap" ondblclick="toggleLike(${post.id}, this)">
+      <img class="post-image" src="${post.image}" alt="Post foto"
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+      <div class="post-image-fallback" style="display:none; background: var(--surface2); font-size: 120px">${post.imageEmoji}</div>
+      <div class="post-authentic-tag">🚫 Onbewerkt</div>
+      <div class="post-expiry-bar">
+        <div class="post-expiry-fill" style="width:${expiryPct}%"></div>
       </div>
     </div>
-    <div class="feed-photo-wrap">
-      <div class="feed-photo-placeholder" style="background:${post.feedColor}">
-        <span>${post.emoji}</span>
-      </div>
-    </div>
-    <div class="feed-actions-bar">
-      <button class="feed-action-like" id="like-${post.id}" onclick="toggleFeedLike(${post.id})">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-        </svg>
-        <span id="like-count-${post.id}">${post.likes}</span>
+    <div class="post-actions">
+      <button class="post-action-btn ${liked ? 'liked' : ''}" id="like-btn-${post.id}" onclick="toggleLike(${post.id}, this)">
+        <svg viewBox="0 0 24 24" ${liked ? 'fill="currentColor"' : 'fill="none" stroke="currentColor" stroke-width="2.5"'}><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <span id="like-count-${post.id}">${likeCount}</span>
       </button>
-      <button class="feed-spark-btn" id="spark-btn-${post.id}" onclick="feedSpark(${post.id}, '${post.username.split(' ')[0]}')">
-        <svg width="14" height="14" viewBox="0 0 72 72" fill="none">
-          <polygon points="42,4 28,34 38,34 30,68 52,30 40,30" fill="white"/>
-        </svg>
-        Spark
+      <button class="post-action-btn" onclick="openComments(${post.id})">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span>${commentCount}</span>
+      </button>
+      <button class="post-action-btn" onclick="sharePost(${post.id})">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+      <button class="post-match-btn ${isMatched ? 'matched' : ''}" id="match-btn-${post.id}" onclick="feedMatch(${post.userId}, ${post.id})">
+        ${isMatched ? '✓ Match' : '♡ Match'}
       </button>
     </div>
-    <div class="feed-caption">
-      <strong>${post.username.split(' ')[0]}</strong>${post.caption}
-    </div>
+    <div class="post-likes" id="post-likes-${post.id}">${likeCount} likes</div>
+    <div class="post-caption"><strong>${post.name}</strong> ${post.caption}</div>
+    <div class="post-comments-preview" onclick="openComments(${post.id})">Bekijk alle ${commentCount} reacties</div>
   `;
-  return article;
+
+  return div;
 }
 
-function toggleFeedLike(id) {
-  const post = FEED_POSTS.find(p => p.id === id);
-  const btn = document.getElementById(`like-${id}`);
-  const count = document.getElementById(`like-count-${id}`);
-
-  if (state.likedFeedPosts.has(id)) {
-    state.likedFeedPosts.delete(id);
-    post.likes--;
-    btn.classList.remove('liked');
-    btn.querySelector('svg').style.fill = 'none';
-  } else {
-    state.likedFeedPosts.add(id);
-    post.likes++;
-    btn.classList.add('liked');
-    btn.querySelector('svg').style.fill = '#ff6b9d';
-    // Heart pop animation
-    btn.querySelector('svg').style.transform = 'scale(1.4)';
-    setTimeout(() => btn.querySelector('svg').style.transform = '', 300);
-  }
-  count.textContent = post.likes;
-}
-
-function feedSpark(postId, name) {
-  const btn = document.getElementById(`spark-btn-${postId}`);
+function toggleLike(postId, el) {
   const post = FEED_POSTS.find(p => p.id === postId);
+  if (!post) return;
+  post.liked = !post.liked;
+  const delta = post.liked ? 1 : -1;
+  state.feedLikes[postId] = (state.feedLikes[postId] ?? post.likes) + delta;
+  post.likes = state.feedLikes[postId];
 
-  btn.disabled = true;
-  btn.innerHTML = `⚡ Sparked!`;
-  btn.style.opacity = '0.7';
-
-  showToast(`⚡ Spark sent to ${name}!`);
-
-  // Maybe match
-  if (Math.random() < 0.5) {
-    const profile = PROFILES.find(p => p.id === post.userId);
-    if (profile) {
-      setTimeout(() => triggerMatch(profile), 800);
+  // Update button
+  const btn = document.getElementById(`like-btn-${postId}`);
+  const countEl = document.getElementById(`like-count-${postId}`);
+  const likesEl = document.getElementById(`post-likes-${postId}`);
+  if (btn) {
+    btn.classList.toggle('liked', post.liked);
+    const svg = btn.querySelector('svg');
+    if (svg) {
+      svg.setAttribute('fill', post.liked ? 'currentColor' : 'none');
+      if (!post.liked) { svg.setAttribute('stroke', 'currentColor'); svg.setAttribute('stroke-width', '2.5'); }
     }
+    // Heart animation
+    btn.style.transform = 'scale(1.3)';
+    setTimeout(() => { btn.style.transform = ''; }, 200);
   }
+  if (countEl) countEl.textContent = post.likes;
+  if (likesEl) likesEl.textContent = `${post.likes} likes`;
+  if (post.liked) showToast('❤️ Liked!');
 }
 
-// ==============================================
-// CAMERA / PHOTO POST
-// ==============================================
-async function openCamera() {
-  const maxPhotos = state.isPremium ? 2 : 1;
-  if (state.weeklyPhotos >= maxPhotos) {
-    showToast(`You've used your ${maxPhotos} photo${maxPhotos > 1 ? 's' : ''} this week 📷`);
-    if (!state.isPremium) {
-      setTimeout(() => document.getElementById('premium-screen').classList.remove('hidden'), 1000);
-    }
+function feedMatch(userId, postId) {
+  const profile = PROFILES.find(p => p.id === userId);
+  if (!profile) return;
+  const btn = document.getElementById(`match-btn-${postId}`);
+  if (state.matchedUserIds.includes(userId)) {
+    showToast(`✓ Al een match met ${profile.name}!`);
     return;
   }
+  state.matchedUserIds.push(userId);
+  if (btn) { btn.textContent = '✓ Match'; btn.classList.add('matched'); }
+  setTimeout(() => showMatchOverlay(profile), 200);
+}
 
-  document.getElementById('camera-overlay').classList.remove('hidden');
-  document.getElementById('weekly-count').textContent = `${state.weeklyPhotos}/${maxPhotos} used`;
+function sharePost(postId) {
+  showToast('🔗 Link gekopieerd!');
+}
 
-  try {
-    cameraStream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: 'user', width: { ideal: 1280 }, height: { ideal: 720 } },
-      audio: false
-    });
-    const video = document.getElementById('camera-video');
-    video.srcObject = cameraStream;
-    state.hasCameraStream = true;
-  } catch (err) {
-    showToast("Camera access denied 📷 Please allow camera in settings");
-    // Show demo mode
-    const viewfinder = document.querySelector('.camera-viewfinder');
-    viewfinder.style.background = 'linear-gradient(135deg,#1a1a2e,#16213e)';
+// ============================================================
+// COMMENTS
+// ============================================================
+
+function openComments(postId) {
+  state.currentCommentPostId = postId;
+  const post = FEED_POSTS.find(p => p.id === postId);
+  const extraComments = state.feedComments[postId] || [];
+  const allComments = [...post.comments, ...extraComments];
+
+  const list = document.getElementById('comments-list');
+  list.innerHTML = allComments.map(c => `
+    <div class="comment-item">
+      <div class="comment-avatar" style="background:var(--surface2)">${c.emoji || '👤'}</div>
+      <div class="comment-body">
+        <div class="comment-name">${c.name}</div>
+        <div class="comment-text">${c.text}</div>
+        <div class="comment-time">${c.time}</div>
+      </div>
+    </div>
+  `).join('');
+
+  document.getElementById('comments-overlay').classList.remove('hidden');
+}
+
+function postComment() {
+  const input = document.getElementById('comment-input');
+  const text = input.value.trim();
+  if (!text || !state.currentCommentPostId) return;
+  const comment = { name: state.user?.name || 'Jij', emoji: '👤', text, time: 'nu' };
+  if (!state.feedComments[state.currentCommentPostId]) {
+    state.feedComments[state.currentCommentPostId] = [];
   }
+  state.feedComments[state.currentCommentPostId].push(comment);
+
+  const list = document.getElementById('comments-list');
+  const el = document.createElement('div');
+  el.className = 'comment-item';
+  el.innerHTML = `
+    <div class="comment-avatar" style="background:var(--grad1)">👤</div>
+    <div class="comment-body">
+      <div class="comment-name">${comment.name}</div>
+      <div class="comment-text">${comment.text}</div>
+      <div class="comment-time">nu</div>
+    </div>
+  `;
+  list.appendChild(el);
+  list.scrollTop = list.scrollHeight;
+  input.value = '';
+  showToast('💬 Reactie geplaatst!');
 }
 
-function closeCamera() {
-  if (cameraStream) {
-    cameraStream.getTracks().forEach(t => t.stop());
-    cameraStream = null;
-  }
-  capturedPhotoData = null;
-  document.getElementById('camera-overlay').classList.add('hidden');
-  document.getElementById('photo-preview').classList.add('hidden');
-  document.getElementById('camera-video').classList.remove('hidden');
-  document.querySelector('.camera-shutter').classList.remove('hidden');
-  document.querySelector('.camera-rules').classList.remove('hidden');
-}
+// ============================================================
+// USER PROFILE OVERLAY
+// ============================================================
 
-function takePhoto() {
-  const video = document.getElementById('camera-video');
-  const canvas = document.getElementById('camera-canvas');
-
-  if (state.hasCameraStream) {
-    canvas.width = video.videoWidth || 640;
-    canvas.height = video.videoHeight || 480;
-    canvas.getContext('2d').drawImage(video, 0, 0);
-    capturedPhotoData = canvas.toDataURL('image/jpeg', 0.85);
-  } else {
-    // Demo: generate a colorful placeholder
-    capturedPhotoData = 'demo';
-  }
-
-  // Show preview
-  const preview = document.getElementById('photo-preview');
-  const previewImg = document.getElementById('preview-img');
-
-  if (capturedPhotoData !== 'demo') {
-    previewImg.src = capturedPhotoData;
-  } else {
-    preview.style.background = 'linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%)';
-    previewImg.style.display = 'none';
-  }
-
-  preview.classList.remove('hidden');
-  document.querySelector('.camera-shutter').classList.add('hidden');
-  document.querySelector('.camera-rules').classList.add('hidden');
-  document.getElementById('camera-video').classList.add('hidden');
-}
-
-function retakePhoto() {
-  capturedPhotoData = null;
-  document.getElementById('photo-preview').classList.add('hidden');
-  document.getElementById('camera-video').classList.remove('hidden');
-  document.querySelector('.camera-shutter').classList.remove('hidden');
-  document.querySelector('.camera-rules').classList.remove('hidden');
-  document.getElementById('preview-img').style.display = '';
-}
-
-function postPhoto() {
-  state.weeklyPhotos++;
-  closeCamera();
-  buildProfileGrid();
-  showToast("⚡ Your Spark is live for 30 days!");
-  updateExpiryNotice();
-}
-
-// ==============================================
-// CHAT
-// ==============================================
-function openChat(profile) {
+function openUserProfile(userId) {
+  const profile = PROFILES.find(p => p.id === userId);
   if (!profile) return;
-  closeMatchOverlay();
-  state.chatPartner = profile;
+  const isMatched = state.matchedUserIds.includes(userId);
+  const bgColors = ['linear-gradient(135deg,#e91e8c,#7c3aed)','linear-gradient(135deg,#ff6b35,#e91e8c)','linear-gradient(135deg,#7c3aed,#4f46e5)','linear-gradient(135deg,#0ea5e9,#7c3aed)','linear-gradient(135deg,#f59e0b,#e91e8c)','linear-gradient(135deg,#10b981,#0ea5e9)'];
+  const bg = bgColors[profile.id % bgColors.length];
 
-  // Set up chat header
-  const avatar = document.getElementById('chat-partner-avatar');
-  const nameEl = document.getElementById('chat-partner-name');
-  avatar.textContent = profile.emoji;
-  avatar.style.background = profile.color;
-  nameEl.textContent = profile.name;
+  const content = document.getElementById('user-profile-content');
+  content.innerHTML = `
+    <div class="upo-photo-wrap">
+      <img class="upo-photo" src="${profile.avatar}" alt="${profile.name}"
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+      <div class="upo-photo-fallback" style="background:${bg};display:none;">${profile.emoji}</div>
+    </div>
+    <div class="upo-header">
+      <img class="upo-avatar" src="${profile.avatar}" alt="${profile.name}"
+        onerror="this.src=''; this.style.background='${bg}';" />
+      <div class="upo-info">
+        <div class="upo-name">${profile.name}, ${profile.age} ${profile.premium ? '⚡' : ''}</div>
+        <div class="upo-details">📍 ${profile.city} · ${profile.distance} weg</div>
+      </div>
+    </div>
+    <p class="upo-bio">${profile.bio}</p>
+    <div class="upo-tags">
+      ${profile.tags.map(t=>`<span class="upo-tag">${t}</span>`).join('')}
+    </div>
+    ${profile.photos.length > 0 ? `
+    <h4 style="font-size:13px;color:var(--text-s);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Foto's (${profile.photos.length})</h4>
+    <div class="upo-photos-grid">
+      ${profile.photos.map((p,i)=>`
+        <div class="upo-photo-item" style="background:${bg}">
+          <img src="${p}" alt="Foto" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"/>
+          <div class="upo-photo-fallback2" style="display:none">${profile.emoji}</div>
+        </div>
+      `).join('')}
+    </div>
+    ` : ''}
+    <div style="height:16px"></div>
+    ${isMatched ? `
+      <div class="upo-matched-msg">✓ Jullie zijn een match! Je kunt nu chatten.</div>
+      <div style="height:12px"></div>
+      <div class="upo-actions">
+        <button class="upo-like-btn" onclick="openChat(${userId}); closeOverlay('user-profile-overlay')">
+          💬 Stuur bericht
+        </button>
+      </div>
+    ` : `
+      <div class="upo-actions">
+        <button class="upo-like-btn" onclick="matchFromProfile(${userId})">
+          ❤️ Match
+        </button>
+        <button class="upo-dislike-btn" onclick="closeOverlay('user-profile-overlay')">
+          ✕
+        </button>
+      </div>
+    `}
+  `;
 
-  // Load messages
-  buildChatMessages(profile.id);
-
-  document.getElementById('chat-screen').classList.remove('hidden');
-  setTimeout(() => {
-    const msgs = document.getElementById('chat-messages');
-    msgs.scrollTop = msgs.scrollHeight;
-  }, 100);
+  document.getElementById('user-profile-overlay').classList.remove('hidden');
 }
 
-function closeChat() {
-  document.getElementById('chat-screen').classList.add('hidden');
-  state.chatPartner = null;
+function matchFromProfile(userId) {
+  const profile = PROFILES.find(p => p.id === userId);
+  if (!profile) return;
+  closeOverlay('user-profile-overlay');
+  state.matchedUserIds.push(userId);
+  setTimeout(() => showMatchOverlay(profile), 300);
 }
 
-function buildChatMessages(partnerId) {
-  const container = document.getElementById('chat-messages');
-  container.innerHTML = '';
-  const msgs = CHAT_HISTORIES[partnerId] || [];
+// ============================================================
+// MATCHES TAB
+// ============================================================
 
-  msgs.forEach(msg => {
-    addMsgBubble(container, msg.text, msg.sent, msg.time);
-  });
+function renderMatches() {
+  renderNewMatches();
+  renderMatchList();
 }
 
-function addMsgBubble(container, text, sent, time) {
-  const wrap = document.createElement('div');
-  wrap.style.display = 'flex';
-  wrap.style.flexDirection = 'column';
-  wrap.style.alignItems = sent ? 'flex-end' : 'flex-start';
+function renderNewMatches() {
+  const row = document.getElementById('new-matches-row');
+  const matchedProfiles = PROFILES.filter(p => state.matchedUserIds.includes(p.id));
+  row.innerHTML = matchedProfiles.map(p => `
+    <div class="new-match-item" onclick="openChat(${p.id})">
+      <div class="new-match-avatar-wrap">
+        <img class="new-match-avatar" src="${p.avatar}" alt="${p.name}"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="new-match-avatar-fallback" style="display:none;background:var(--surface2)">${p.emoji}</div>
+        <div class="new-match-online"></div>
+      </div>
+      <span class="new-match-name">${p.name}</span>
+    </div>
+  `).join('');
+}
 
-  const bubble = document.createElement('div');
-  bubble.className = `msg-bubble ${sent ? 'sent' : 'received'}`;
-  bubble.textContent = text;
+function renderMatchList() {
+  const list = document.getElementById('matches-list');
+  const matchedProfiles = PROFILES.filter(p => state.matchedUserIds.includes(p.id));
+  list.innerHTML = matchedProfiles.map(p => {
+    const match = MATCHES.find(m => m.id === p.id);
+    return `
+      <div class="match-item" onclick="openChat(${p.id})">
+        <img class="match-item-avatar" src="${p.avatar}" alt="${p.name}"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="match-item-avatar-fallback" style="display:none;background:var(--surface2)">${p.emoji}</div>
+        <div class="match-item-info">
+          <div class="match-item-name">${p.name}</div>
+          <div class="match-item-msg">${match?.lastMsg || 'Zeg hoi! 👋'}</div>
+        </div>
+        <div class="match-item-time">${match?.time || 'nu'}</div>
+      </div>
+    `;
+  }).join('');
+}
 
-  const timeEl = document.createElement('div');
-  timeEl.className = 'msg-time';
-  timeEl.textContent = time || formatTime(new Date());
+// ============================================================
+// CHAT
+// ============================================================
 
-  wrap.appendChild(bubble);
-  wrap.appendChild(timeEl);
-  container.appendChild(wrap);
+function renderChatList() {
+  const list = document.getElementById('chat-list');
+  const matchedProfiles = PROFILES.filter(p => state.matchedUserIds.includes(p.id));
+  list.innerHTML = matchedProfiles.map(p => {
+    const match = MATCHES.find(m => m.id === p.id);
+    const msgs = state.chatMessages[p.id] || [];
+    const lastMsg = msgs.length > 0 ? msgs[msgs.length-1].text : 'Zeg hoi! 👋';
+    const unread = match?.unread || 0;
+    return `
+      <div class="chat-item" onclick="openChat(${p.id})">
+        <div class="chat-avatar" style="position:relative">
+          <img src="${p.avatar}" alt="${p.name}" onerror="this.style.display='none'; this.parentElement.querySelector('.chat-avatar-fallback').style.display='flex';" />
+          <div class="chat-avatar-fallback" style="display:none;background:var(--surface2)">${p.emoji}</div>
+          <div class="chat-online"></div>
+        </div>
+        <div class="chat-info">
+          <div class="chat-name">${p.name}</div>
+          <div class="chat-preview">${lastMsg}</div>
+        </div>
+        <div class="chat-meta">
+          <span class="chat-time">${match?.time || 'nu'}</span>
+          ${unread > 0 ? `<span class="chat-unread">${unread}</span>` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function openChat(userId) {
+  const profile = PROFILES.find(p => p.id === userId);
+  if (!profile) return;
+  state.currentChatUserId = userId;
+
+  const header = document.getElementById('chat-header-info');
+  header.innerHTML = `
+    <div class="name">${profile.name}, ${profile.age}</div>
+  `;
+
+  const messages = state.chatMessages[userId] || [];
+  const msgContainer = document.getElementById('chat-messages');
+  msgContainer.innerHTML = messages.map(m => `
+    <div class="msg ${m.sent ? 'sent' : 'received'}">
+      <div>
+        <div class="msg-bubble">${m.text}</div>
+        <div class="msg-time">${m.time}</div>
+      </div>
+    </div>
+  `).join('');
+  msgContainer.scrollTop = msgContainer.scrollHeight;
+
+  // Clear unread
+  const match = MATCHES.find(m => m.id === userId);
+  if (match) match.unread = 0;
+  updateChatBadge();
+
+  document.getElementById('chat-window-overlay').classList.remove('hidden');
 }
 
 function sendMessage() {
   const input = document.getElementById('chat-input');
   const text = input.value.trim();
-  if (!text || !state.chatPartner) return;
+  if (!text || !state.currentChatUserId) return;
+
+  const msg = { sent: true, text, time: new Date().toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' }) };
+  if (!state.chatMessages[state.currentChatUserId]) {
+    state.chatMessages[state.currentChatUserId] = [];
+  }
+  state.chatMessages[state.currentChatUserId].push(msg);
 
   const container = document.getElementById('chat-messages');
-  addMsgBubble(container, text, true, formatTime(new Date()));
-
-  input.value = '';
+  const el = document.createElement('div');
+  el.className = 'msg sent';
+  el.innerHTML = `<div><div class="msg-bubble">${text}</div><div class="msg-time">${msg.time}</div></div>`;
+  container.appendChild(el);
   container.scrollTop = container.scrollHeight;
+  input.value = '';
 
-  // Auto-reply after delay
+  // Simulated reply
+  const profile = PROFILES.find(p => p.id === state.currentChatUserId);
   const replies = [
-    "Haha love that! 😄",
-    "That's so cool!",
-    "Tell me more ✨",
-    "Ha! Same 🙈",
-    "Okay we definitely need to meet up",
-    "You're funny 😂",
-    "Wait really?! 😮"
+    'Haha dat is zo leuk! 😄', 'Echt? Dat wist ik niet!', 'We moeten zeker afspreken 😊',
+    '❤️', 'Dat klinkt geweldig!', 'Hoe laat dan?', 'Ik ook! 🎉',
   ];
-
   setTimeout(() => {
-    const reply = replies[Math.floor(Math.random() * replies.length)];
-    addMsgBubble(container, reply, false, formatTime(new Date()));
+    const reply = { sent: false, text: replies[Math.floor(Math.random() * replies.length)], time: new Date().toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' }) };
+    state.chatMessages[state.currentChatUserId].push(reply);
+    const replyEl = document.createElement('div');
+    replyEl.className = 'msg received';
+    replyEl.innerHTML = `<div><div class="msg-bubble">${reply.text}</div><div class="msg-time">${reply.time}</div></div>`;
+    container.appendChild(replyEl);
     container.scrollTop = container.scrollHeight;
-  }, 1200 + Math.random() * 800);
+  }, 1000 + Math.random() * 1500);
 }
 
-function handleChatKey(e) {
-  if (e.key === 'Enter') sendMessage();
+function updateChatBadge() {
+  const totalUnread = MATCHES.reduce((sum, m) => sum + (m.unread || 0), 0);
+  const badge = document.getElementById('chat-badge');
+  if (badge) {
+    badge.textContent = totalUnread;
+    badge.style.display = totalUnread > 0 ? 'flex' : 'none';
+  }
 }
 
-function formatTime(date) {
-  return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+// ============================================================
+// CAMERA
+// ============================================================
+
+function openCamera() {
+  document.getElementById('camera-overlay').classList.remove('hidden');
+  document.getElementById('camera-viewfinder').style.display = 'block';
+  document.getElementById('photo-preview').classList.add('hidden');
+  startCamera();
 }
 
-// ==============================================
-// MATCHES LIST
-// ==============================================
-function buildMatchesList() {
-  const newList = document.getElementById('matches-new-list');
-  const chatList = document.getElementById('matches-chat-list');
-  newList.innerHTML = '';
-  chatList.innerHTML = '';
+async function startCamera() {
+  try {
+    if (state.cameraStream) {
+      state.cameraStream.getTracks().forEach(t => t.stop());
+    }
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: state.cameraFacingMode, width: { ideal: 1280 }, height: { ideal: 720 } },
+      audio: false
+    });
+    state.cameraStream = stream;
+    const video = document.getElementById('camera-video');
+    video.srcObject = stream;
+  } catch (err) {
+    showToast('📷 Camera niet beschikbaar — gebruik een echt apparaat');
+    closeCamera();
+  }
+}
 
-  MATCHES.forEach(match => {
-    if (!match.lastMsg) {
-      // New match (no messages yet)
-      const item = document.createElement('div');
-      item.className = 'new-match-item';
-      item.onclick = () => { openChat(match); document.getElementById('matches-screen').classList.add('hidden'); };
-      item.innerHTML = `
-        <div class="new-match-avatar" style="background:${match.color}">
-          ${match.emoji}
-          <div class="new-match-spark">⚡</div>
-        </div>
-        <span class="new-match-name">${match.name}</span>
-      `;
-      newList.appendChild(item);
-    } else {
-      // Existing chat
-      const item = document.createElement('div');
-      item.className = 'chat-list-item';
-      item.onclick = () => { openChat(match); document.getElementById('matches-screen').classList.add('hidden'); };
-      item.innerHTML = `
-        <div class="chat-list-avatar" style="background:${match.color}">${match.emoji}</div>
-        <div class="chat-list-info">
-          <div class="chat-list-name">${match.name}</div>
-          <div class="chat-list-preview">${match.lastMsg}</div>
-        </div>
-        <span class="chat-list-time">${match.time}</span>
-      `;
-      chatList.appendChild(item);
+function switchCamera() {
+  state.cameraFacingMode = state.cameraFacingMode === 'user' ? 'environment' : 'user';
+  startCamera();
+}
+
+function capturePhoto() {
+  const video = document.getElementById('camera-video');
+  const canvas = document.getElementById('photo-canvas');
+  canvas.width = video.videoWidth || 640;
+  canvas.height = video.videoHeight || 480;
+  const ctx = canvas.getContext('2d');
+  if (state.cameraFacingMode === 'user') {
+    ctx.scale(-1, 1);
+    ctx.drawImage(video, -canvas.width, 0);
+  } else {
+    ctx.drawImage(video, 0, 0);
+  }
+  state.capturedPhoto = canvas.toDataURL('image/jpeg', 0.9);
+
+  document.getElementById('camera-viewfinder').style.display = 'none';
+  const preview = document.getElementById('photo-preview');
+  preview.classList.remove('hidden');
+  document.getElementById('preview-img').src = state.capturedPhoto;
+
+  // Flash effect
+  const flash = document.createElement('div');
+  flash.style.cssText = 'position:fixed;inset:0;background:#fff;z-index:9999;pointer-events:none;animation:flashOut 0.3s ease forwards;';
+  document.body.appendChild(flash);
+  setTimeout(() => flash.remove(), 300);
+}
+
+function retakePhoto() {
+  state.capturedPhoto = null;
+  document.getElementById('camera-viewfinder').style.display = 'block';
+  document.getElementById('photo-preview').classList.add('hidden');
+  startCamera();
+}
+
+function postPhoto() {
+  closeCamera();
+  showToast('✦ Foto geplaatst! Zichtbaar voor 1 maand.');
+  // Update quota UI
+  const fill = document.querySelector('.quota-fill');
+  const count = document.querySelector('.quota-count');
+  if (fill) fill.style.width = '100%';
+  if (count) count.textContent = '1 / 1';
+}
+
+function closeCamera() {
+  if (state.cameraStream) {
+    state.cameraStream.getTracks().forEach(t => t.stop());
+    state.cameraStream = null;
+  }
+  document.getElementById('camera-overlay').classList.add('hidden');
+}
+
+// ============================================================
+// OVERLAYS
+// ============================================================
+
+function closeOverlay(id) {
+  document.getElementById(id).classList.add('hidden');
+  if (id === 'camera-overlay') closeCamera();
+}
+
+function showPremium() {
+  document.getElementById('premium-overlay').classList.remove('hidden');
+}
+
+function upgradePremium() {
+  showToast('⚡ Premium geactiveerd! (demo)');
+  state.user.premium = true;
+  closeOverlay('premium-overlay');
+  const badge = document.querySelector('.avatar-badge');
+  if (badge) { badge.textContent = 'PREMIUM ⚡'; badge.classList.add('premium'); }
+  const count = document.querySelector('.quota-count');
+  if (count) count.textContent = '0 / 2';
+}
+
+// Premium plan selection
+document.querySelectorAll('.plan-card').forEach(card => {
+  card.addEventListener('click', () => {
+    document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+  });
+});
+
+// ============================================================
+// FILTER PANEL
+// ============================================================
+
+function toggleFilters() {
+  state.filtersVisible = !state.filtersVisible;
+  const panel = document.getElementById('filter-panel');
+  panel.classList.toggle('hidden', !state.filtersVisible);
+}
+
+// ============================================================
+// TOAST
+// ============================================================
+
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ============================================================
+// FLASH KEYFRAME
+// ============================================================
+
+const flashStyle = document.createElement('style');
+flashStyle.textContent = `@keyframes flashOut { from { opacity:1; } to { opacity:0; } }`;
+document.head.appendChild(flashStyle);
+
+// ============================================================
+// CLOSE OVERLAY ON BACKDROP CLICK
+// ============================================================
+
+document.querySelectorAll('.overlay').forEach(overlay => {
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) {
+      closeOverlay(overlay.id);
     }
   });
-}
-
-// ==============================================
-// PROFILE
-// ==============================================
-function buildProfileGrid() {
-  const grid = document.getElementById('profile-photo-grid');
-  grid.innerHTML = '';
-
-  const maxSlots = 6;
-  const hasPhotos = state.weeklyPhotos > 0;
-
-  if (hasPhotos) {
-    // Main photo slot
-    const tile = document.createElement('div');
-    tile.className = 'profile-photo-tile';
-    tile.style.gridColumn = 'span 2';
-    tile.style.gridRow = 'span 2';
-    tile.innerHTML = `
-      <div class="feed-photo-placeholder" style="background:var(--spark-gradient);width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:72px">
-        ⚡
-      </div>
-      <div class="expiry-label">Expires in ${30 - (state.weeklyPhotos > 1 ? 7 : 0)}d</div>
-    `;
-    grid.appendChild(tile);
-  }
-
-  if (state.isPremium && state.weeklyPhotos > 1) {
-    const tile = document.createElement('div');
-    tile.className = 'profile-photo-tile';
-    tile.innerHTML = `
-      <div style="background:linear-gradient(135deg,#667eea,#764ba2);width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:42px">🌙</div>
-      <div class="expiry-label">Expires in 23d</div>
-    `;
-    grid.appendChild(tile);
-  }
-
-  // Empty slots
-  const filled = hasPhotos ? (state.isPremium && state.weeklyPhotos > 1 ? 5 : 4) : 0;
-  const empty = Math.max(0, maxSlots - filled);
-
-  for (let i = 0; i < Math.min(empty, 4); i++) {
-    const tile = document.createElement('div');
-    tile.className = 'profile-photo-tile';
-    tile.onclick = () => openCamera();
-    tile.innerHTML = `
-      <div class="add-photo-placeholder">
-        <div class="add-icon">+</div>
-        <span>Post</span>
-      </div>
-    `;
-    grid.appendChild(tile);
-  }
-}
-
-function updateProfileStats() {
-  document.getElementById('stat-likes').textContent = '284';
-  document.getElementById('stat-sparks').textContent = '12';
-  document.getElementById('stat-views').textContent = '1.4k';
-}
-
-function updateExpiryNotice() {
-  const notice = document.getElementById('photo-expiry-notice');
-  const maxPhotos = state.isPremium ? 2 : 1;
-  const remaining = maxPhotos - state.weeklyPhotos;
-
-  if (remaining <= 0) {
-    notice.textContent = `⏳ Next free post available in 4 days`;
-  } else {
-    notice.textContent = `📷 ${remaining} photo post${remaining > 1 ? 's' : ''} remaining this week`;
-  }
-  notice.style.display = notice.textContent ? 'flex' : 'none';
-}
-
-// ==============================================
-// PREMIUM
-// ==============================================
-function subscribePremium(plan) {
-  state.isPremium = true;
-  document.getElementById('premium-tag').textContent = 'PREMIUM';
-  document.getElementById('premium-tag').style.background = 'linear-gradient(135deg,#ffb347,#ff6b35)';
-  closeOverlay('premium-screen');
-  showToast("⚡ Welcome to Spark Premium!");
-  buildProfileGrid();
-  updateExpiryNotice();
-}
-
-// ==============================================
-// TOAST
-// ==============================================
-let toastTimeout;
-function showToast(msg) {
-  const toast = document.getElementById('toast');
-  toast.textContent = msg;
-  toast.classList.remove('hidden');
-
-  clearTimeout(toastTimeout);
-  toastTimeout = setTimeout(() => toast.classList.add('hidden'), 3000);
-}
-
-// ==============================================
-// KEYBOARD
-// ==============================================
-document.addEventListener('keydown', (e) => {
-  if (state.currentView !== 'swipe') return;
-  if (e.key === 'ArrowRight') swipeCard('right');
-  else if (e.key === 'ArrowLeft') swipeCard('left');
-  else if (e.key === 'ArrowUp') swipeCard('up');
 });
+
+// ============================================================
+// INIT
+// ============================================================
+
+showPage('splash');
+updateChatBadge();
