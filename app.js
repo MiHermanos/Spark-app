@@ -844,6 +844,11 @@ function updateOwnProfileView() {
     avatarImg.src = "photos/profile_emma.jpg"; // Default
   }
 
+  // Populate Instagram-like stats
+  document.getElementById("stat-posts-count").textContent = state.user.photos.length;
+  document.getElementById("stat-trust-score").textContent = `${state.user.trustScore * 20}%`;
+  document.getElementById("stat-matches-count").textContent = state.matches.length;
+
   // Verification score badge
   const trustBadge = document.getElementById("own-trust-badge");
   if (state.user.trustScore >= 4) {
@@ -978,10 +983,18 @@ let cameraStream = null;
 function openCamera() {
   const maxWeekly = state.user.premium ? 2 : 1;
   if (state.user.weeklyUploadCount >= maxWeekly) {
-    showToast(`Weekly quota reached (${maxWeekly}/${maxWeekly}). Upgrade to post more!`);
-    showPremium();
+    if (state.user.premium) {
+      showToast(`Weekly quota reached (${maxWeekly}/${maxWeekly}) for Premium. Wait for next week's slots!`);
+    } else {
+      showToast(`Weekly quota reached (${maxWeekly}/${maxWeekly}). Upgrade to Premium to post 2 photos!`);
+      showPremium();
+    }
     return;
   }
+
+  // Ensure camera-container is visible and preview is hidden
+  document.querySelector(".camera-container").classList.remove("hidden");
+  document.getElementById("photo-preview").classList.add("hidden");
 
   const overlay = document.getElementById("camera-overlay");
   overlay.classList.remove("hidden");
@@ -1094,11 +1107,13 @@ function capturePhoto() {
   previewImg.src = dataUrl;
 
   document.getElementById("photo-preview").classList.remove("hidden");
+  document.querySelector(".camera-container").classList.add("hidden");
   stopCameraStream();
 }
 
 function retakePhoto() {
   document.getElementById("photo-preview").classList.add("hidden");
+  document.querySelector(".camera-container").classList.remove("hidden");
   openCamera();
 }
 

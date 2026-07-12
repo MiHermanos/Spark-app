@@ -220,41 +220,50 @@
               <img src="photos/profile_emma.jpg" alt="Your profile" class="profile-avatar-img" id="own-avatar" onerror="this.style.background='linear-gradient(135deg,#e91e8c,#ff6b35)';this.src=''"/>
               <div class="avatar-badge free" id="own-badge">FREE</div>
             </div>
-            <div class="profile-own-meta">
-              <h2 id="own-name">Emma, 24</h2>
-              <p class="own-location" id="own-location-display">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                Amsterdam
-              </p>
+            <div class="profile-stats-row">
+              <div class="profile-stat-item"><span class="stat-num" id="stat-posts-count">0</span><span class="stat-label">posts</span></div>
+              <div class="profile-stat-item"><span class="stat-num" id="stat-trust-score">80%</span><span class="stat-label">trust</span></div>
+              <div class="profile-stat-item"><span class="stat-num" id="stat-matches-count">0</span><span class="stat-label">matches</span></div>
             </div>
-            <button class="profile-settings-btn" onclick="showSettings()">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-            </button>
           </div>
+          
+          <div class="profile-bio-section">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <h2 id="own-name">Emma, 24</h2>
+              <span id="own-trust-badge" class="trust-badge hidden">Verified Real ✓</span>
+            </div>
+            <p class="own-location" id="own-location-display">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Amsterdam
+            </p>
+            <p class="own-bio-text">Real connection seeker. No filters, just me.</p>
+            <div class="profile-actions-row">
+              <button class="profile-action-btn-sub" onclick="showSettings()">Edit Profile</button>
+              <button class="profile-action-btn-sub" onclick="showPremium()">Get Premium</button>
+            </div>
+          </div>
+
           <div class="photo-quota">
             <div class="quota-info">
-              <span class="quota-label">Photos this week</span>
+              <span class="quota-label" id="quota-label">Photos this week</span>
               <span class="quota-count" id="quota-count">0 / 1</span>
             </div>
             <div class="quota-bar"><div class="quota-fill" id="quota-fill" style="width:0%"></div></div>
-            <p class="quota-note">Photos disappear after 1 month · No filters · Live only</p>
+            <p class="quota-countdown" id="quota-countdown" style="margin-top:4px; font-size:11px; font-weight:600; color:var(--orange);"></p>
+            <p class="quota-note" style="margin-top:4px;">Photos disappear after 1 month · Live camera only · Unedited</p>
           </div>
+
           <button class="btn-camera-big" onclick="openCamera()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-            Take a Photo
+            Take a Live Photo
           </button>
-          <div class="premium-card" onclick="showPremium()">
-            <div class="premium-left">
-              <span class="premium-icon">⚡</span>
-              <div>
-                <strong>Upgrade to Premium</strong>
-                <p>2 photos/week · Boost · More matches</p>
-              </div>
-            </div>
-            <span class="premium-arrow">›</span>
-          </div>
+
           <div class="own-photos-section">
-            <h3 class="section-title" style="padding:0 0 10px;">Your Photos</h3>
+            <h3 class="section-title" style="padding:0 0 8px;">Your Weekly Slots</h3>
+            <div class="slots-visualizer" id="slots-visualizer">
+              <!-- Dynamically populated (1 for free, 3 for premium) -->
+            </div>
+            <h3 class="section-title" style="padding:16px 0 8px 0;">Your Live Feed</h3>
             <div class="own-photos-grid" id="own-photos-grid">
               <div class="no-photos-msg">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="40" height="40"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
@@ -396,8 +405,8 @@
     <div id="comments-overlay" class="overlay hidden">
       <div class="overlay-inner comments-inner">
         <div class="comments-header">
-          <button class="overlay-close inline" onclick="closeOverlay('comments-overlay')">✕</button>
           <h3>Comments</h3>
+          <button class="comments-close-btn" onclick="closeOverlay('comments-overlay')">✕</button>
         </div>
         <div class="comments-list" id="comments-list"></div>
         <div class="comment-input-area">

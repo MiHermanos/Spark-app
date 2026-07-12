@@ -1151,10 +1151,63 @@ button {
   border-color: transparent;
   box-shadow: 0 2px 8px rgba(233,30,140,0.3);
 }
-.profile-own-meta h2 {
-  font-size: 20px;
-  font-weight: 800;
+.profile-stats-row {
+  display: flex;
+  flex: 1;
+  justify-content: space-around;
+  align-items: center;
+  gap: 12px;
 }
+.profile-stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.profile-stat-item .stat-num {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text);
+}
+.profile-stat-item .stat-label {
+  font-size: 10px;
+  color: var(--text-s);
+  text-transform: lowercase;
+}
+
+.profile-bio-section {
+  padding: 0 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.own-bio-text {
+  font-size: 13px;
+  color: var(--text-m);
+  line-height: 1.5;
+  margin-top: 4px;
+}
+.profile-actions-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+.profile-action-btn-sub {
+  flex: 1;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.2s;
+}
+.profile-action-btn-sub:hover {
+  background: var(--surface);
+}
+
 .own-location {
   display: flex;
   align-items: center;
@@ -1173,17 +1226,26 @@ button {
   padding: 2px 8px;
   white-space: nowrap;
 }
-.profile-settings-btn {
-  background: var(--bg2);
-  border: 1px solid var(--border);
+
+/* Comments Close Button */
+.comments-close-btn {
+  background: var(--bg3);
   color: var(--text-m);
-  width: 38px;
-  height: 38px;
-  border-radius: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: auto;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  transition: background-color 0.2s;
+}
+.comments-close-btn:hover {
+  background: var(--surface);
+  color: #fff;
 }
 
 .photo-quota {
