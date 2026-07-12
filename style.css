@@ -1,5 +1,5 @@
 /* ============================================================
-   SPARK — Premium Styles (Responsive, Gradient Energy, Premium Dark UI)
+   SPARK — Premium Styles (Responsive Phone Frame on Desktop)
    ============================================================ */
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
@@ -48,9 +48,13 @@ html, body {
   align-items: center;
 }
 
-/* ============================================================
-   RESPONSIVE CONTAINER (Bezel-less & clean adaptive viewports)
-   ============================================================ */
+/* On Desktop: Show a beautiful ambient backdrop behind the floating phone screen */
+@media (min-width: 480px) {
+  body {
+    background: radial-gradient(circle at 20% 20%, #150f2b 0%, #030307 100%);
+  }
+}
+
 .app-container {
   width: 100%;
   height: 100%;
@@ -61,17 +65,34 @@ html, body {
   flex-direction: column;
 }
 
-/* Desktop Web Layout: wraps the app in a sleek virtual canvas centered on screen */
+/* ============================================================
+   PHONE CONTAINER ON PC (Sleek physical screen boundary)
+   ============================================================ */
 @media (min-width: 480px) {
   .app-container {
-    width: 420px;
-    height: 860px;
-    border-radius: 36px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 390px;
+    height: 844px; /* iPhone 12/13/14 Pro dimensions */
+    border-radius: 48px;
+    border: 10px solid #1c1c2e; /* Screen Bezel */
     box-shadow: 
-      0 30px 100px rgba(0, 0, 0, 0.9),
-      0 0 0 12px var(--bg2),
-      0 0 60px rgba(233, 30, 140, 0.15);
+      0 25px 80px rgba(0, 0, 0, 0.85),
+      0 0 0 1px rgba(255, 255, 255, 0.08),
+      0 0 40px rgba(233, 30, 140, 0.1);
+  }
+
+  /* Add a virtual notch at the top for aesthetic phone reference */
+  .app-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 110px;
+    height: 25px;
+    background: #1c1c2e;
+    border-bottom-left-radius: 18px;
+    border-bottom-right-radius: 18px;
+    z-index: 1000;
   }
 }
 
@@ -467,6 +488,14 @@ button {
   padding: 24px 18px 10px;
   flex-shrink: 0;
 }
+
+/* Space out top headers on desktop mock to avoid notch collision */
+@media (min-width: 480px) {
+  .swipe-header, .feed-header {
+    padding-top: 38px;
+  }
+}
+
 .swipe-header-right {
   display: flex;
   align-items: center;
@@ -527,7 +556,7 @@ button {
 }
 .swipe-card.dragging {
   cursor: grabbing;
-  transition: none; /* remove transition when dragging for raw physics mapping */
+  transition: none;
 }
 .swipe-card .card-photo {
   width: 100%;
@@ -576,6 +605,12 @@ button {
   font-weight: 700;
   border: 1px solid rgba(255,255,255,0.15);
 }
+/* Push age tag slightly lower on desktop to clear physical notch overlay */
+@media (min-width: 480px) {
+  .card-photo-age {
+    top: 32px;
+  }
+}
 .card-tags {
   display: flex;
   flex-wrap: wrap;
@@ -608,12 +643,11 @@ button {
 .stamp-nope  { right: 30px; color: #ff3b5c; border-color: #ff3b5c; transform: rotate(15deg); }
 .stamp-super { left: 50%; transform: translateX(-50%) rotate(-5deg); color: var(--blue); border-color: var(--blue); top: 120px; }
 
-/* Discovery Card Stack ordering */
 .swipe-card:nth-child(2) { transform: scale(0.95) translateY(12px); z-index: 2; opacity: 0.9; }
 .swipe-card:nth-child(3) { transform: scale(0.9) translateY(24px); z-index: 1; opacity: 0.6; }
 .swipe-card:first-child  { z-index: 3; opacity: 1; }
 
-/* Swipe control panel with Like visual hierarchy */
+/* Action Button visual hierarchy */
 .swipe-controls {
   display: flex;
   align-items: center;
@@ -640,7 +674,6 @@ button {
 .control-btn.rewind   { width: 40px; height: 40px; color: var(--orange); }
 .control-btn.boost    { width: 40px; height: 40px; color: var(--purple-l); }
 
-/* Make the main Like button visually dominant */
 .control-btn.main-like {
   width: 72px;
   height: 72px;
@@ -707,7 +740,6 @@ button {
   padding-bottom: 16px;
 }
 
-/* Feed items layout */
 .feed-post {
   background: var(--bg2);
   border-bottom: 1px solid var(--border);
@@ -823,7 +855,6 @@ button {
 .post-action-btn.liked { color: var(--pink); }
 .post-action-btn svg { width: 22px; height: 22px; }
 
-/* Match Shortcut inside feed item */
 .post-match-btn {
   margin-left: auto;
   background: var(--grad-primary);
@@ -868,11 +899,18 @@ button {
 }
 
 /* ============================================================
-   MATCHES & CHAT TAB (Gradient Energy infused layout)
+   MATCHES & CHAT TIMELINE
    ============================================================ */
 #tab-matches, #tab-chat {
   background: linear-gradient(180deg, rgba(124, 58, 237, 0.04) 0%, rgba(8, 8, 15, 0) 60%);
 }
+
+@media (min-width: 480px) {
+  #tab-matches .page-header, #tab-chat .page-header {
+    padding-top: 38px;
+  }
+}
+
 .page-header {
   padding: 24px 18px 14px;
   flex-shrink: 0;
@@ -1059,12 +1097,19 @@ button {
 }
 
 /* ============================================================
-   PROFILE TAB (Gradient energy & slots visualizer)
+   PROFILE TAB
    ============================================================ */
 #tab-profile {
   overflow-y: auto;
   background: linear-gradient(180deg, rgba(233, 30, 140, 0.05) 0%, rgba(8, 8, 15, 0) 50%);
 }
+
+@media (min-width: 480px) {
+  #tab-profile .profile-own-header {
+    padding-top: 38px;
+  }
+}
+
 .profile-own {
   display: flex;
   flex-direction: column;
@@ -1207,7 +1252,6 @@ button {
   border-color: rgba(255,255,255,0.2);
 }
 
-/* Premium Visualization Slots Card */
 .premium-card {
   background: var(--grad-primary);
   border-radius: var(--radius-sm);
@@ -1241,7 +1285,6 @@ button {
   color: rgba(255,255,255,0.7);
 }
 
-/* Photo Slots Visualizer Grid */
 .slots-visualizer {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1340,7 +1383,7 @@ button {
 }
 
 /* ============================================================
-   LIGHTBOX MODAL (Proper viewport fit, Esc key, close X)
+   LIGHTBOX MODAL
    ============================================================ */
 .lightbox-modal {
   position: absolute;
@@ -1377,7 +1420,7 @@ button {
 }
 .lightbox-content {
   width: 90%;
-  max-width: 360px;
+  max-width: 340px;
   aspect-ratio: 4/5;
   position: relative;
   border-radius: var(--radius);
@@ -1442,10 +1485,6 @@ button {
   margin-bottom: 8px;
   animation: matchPulse 0.5s ease-out;
 }
-@keyframes matchPulse {
-  0% { transform: scale(0.6); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
-}
 .match-sub {
   font-size: 15px;
   color: var(--text-m);
@@ -1498,10 +1537,6 @@ button {
   background: var(--bg);
   animation: slideInUp 0.32s cubic-bezier(0.23, 1, 0.32, 1);
 }
-@keyframes slideInUp {
-  from { transform: translateY(100%); }
-  to   { transform: translateY(0); }
-}
 .full-overlay-inner {
   width: 100%;
   height: 100%;
@@ -1522,6 +1557,13 @@ button {
   padding: 24px 16px 12px;
   border-bottom: 1px solid var(--border);
 }
+
+@media (min-width: 480px) {
+  .upo-top-bar {
+    padding-top: 38px;
+  }
+}
+
 .back-btn-icon {
   background: var(--bg2);
   border: 1px solid var(--border);
@@ -1603,7 +1645,7 @@ button {
 }
 
 /* ============================================================
-   CHAT SCREEN OVERLAY
+   CHAT WINDOW OVERLAY
    ============================================================ */
 .chat-window-inner { background: var(--bg2); }
 .chat-window-header {
@@ -1615,6 +1657,13 @@ button {
   background: var(--bg);
   flex-shrink: 0;
 }
+
+@media (min-width: 480px) {
+  .chat-window-header {
+    padding-top: 38px;
+  }
+}
+
 .chat-header-info .name {
   font-size: 16px;
   font-weight: 800;
@@ -1699,6 +1748,13 @@ button {
   justify-content: center;
   padding: 24px 16px 12px;
 }
+
+@media (min-width: 480px) {
+  .camera-top-bar {
+    padding-top: 38px;
+  }
+}
+
 .camera-badge {
   background: rgba(233,30,140,0.25);
   color: var(--pink);
@@ -1791,7 +1847,7 @@ button {
 .preview-buttons button { flex: 1; }
 
 /* ============================================================
-   SHEET OVERLAYS (Comments, settings, premium)
+   SHEET OVERLAYS
    ============================================================ */
 .overlay {
   position: absolute;
@@ -1812,10 +1868,6 @@ button {
   position: relative;
   animation: sheetUp 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
-@keyframes sheetUp {
-  from { transform: translateY(100%); }
-  to   { transform: translateY(0); }
-}
 .overlay-close {
   position: absolute;
   top: 16px;
@@ -1830,7 +1882,6 @@ button {
   justify-content: center;
 }
 
-/* Premium pricing updates */
 .premium-page { padding: 8px 0; }
 .premium-header {
   text-align: center;
