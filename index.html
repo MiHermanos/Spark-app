@@ -405,8 +405,11 @@
     <div id="comments-overlay" class="overlay hidden">
       <div class="overlay-inner comments-inner">
         <div class="comments-header">
+          <button class="back-btn-icon" onclick="closeOverlay('comments-overlay')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
           <h3>Comments</h3>
-          <button class="comments-close-btn" onclick="closeOverlay('comments-overlay')">✕</button>
+          <div style="width:36px"></div>
         </div>
         <div class="comments-list" id="comments-list"></div>
         <div class="comment-input-area">
