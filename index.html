@@ -2,9 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+<<<<<<< HEAD
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Spark — Real Connections, Real Moments</title>
   <meta name="description" content="Spark is a dating app where authenticity is everything. No filters, no old photos — just real you, right now." />
+=======
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spark — Real Connections, Real Moments</title>
+  <meta name="description" content="Spark is a dating app where authenticity is everything. No filters, no old photos — just real you, right now. Swipe, scroll, and connect." />
+>>>>>>> parent of 45a4ebf (Deleted files)
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -12,12 +18,20 @@
 </head>
 <body>
 
+<<<<<<< HEAD
 <!-- SPLASH -->
+=======
+<!-- =================== SPLASH SCREEN =================== -->
+>>>>>>> parent of 45a4ebf (Deleted files)
 <div id="splash-screen" class="splash">
   <div class="splash-content">
     <div class="logo-container">
       <div class="spark-logo">
+<<<<<<< HEAD
         <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
+=======
+        <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+>>>>>>> parent of 45a4ebf (Deleted files)
           <defs>
             <radialGradient id="sparkGrad" cx="50%" cy="50%" r="50%">
               <stop offset="0%" stop-color="#fff" />
@@ -25,7 +39,14 @@
               <stop offset="70%" stop-color="#ff6b35" />
               <stop offset="100%" stop-color="#e91e8c" />
             </radialGradient>
+<<<<<<< HEAD
             <filter id="glow"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+=======
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+>>>>>>> parent of 45a4ebf (Deleted files)
           </defs>
           <polygon points="42,4 28,34 38,34 30,68 52,30 40,30" fill="url(#sparkGrad)" filter="url(#glow)" />
         </svg>
@@ -33,11 +54,21 @@
       <h1 class="logo-text">spark</h1>
       <p class="logo-tagline">real you. right now.</p>
     </div>
+<<<<<<< HEAD
     <div class="splash-loader"><div class="loader-bar"></div></div>
   </div>
 </div>
 
 <!-- AUTH -->
+=======
+    <div class="splash-loader">
+      <div class="loader-bar"></div>
+    </div>
+  </div>
+</div>
+
+<!-- =================== AUTH SCREEN =================== -->
+>>>>>>> parent of 45a4ebf (Deleted files)
 <div id="auth-screen" class="screen hidden">
   <div class="auth-bg">
     <div class="auth-orb auth-orb-1"></div>
@@ -46,14 +77,31 @@
   </div>
   <div class="auth-content">
     <div class="auth-logo">
+<<<<<<< HEAD
       <svg width="40" height="40" viewBox="0 0 72 72" fill="none">
         <defs><radialGradient id="sparkGrad2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff"/><stop offset="30%" stop-color="#ffb347"/><stop offset="70%" stop-color="#ff6b35"/><stop offset="100%" stop-color="#e91e8c"/></radialGradient></defs>
+=======
+      <svg width="48" height="48" viewBox="0 0 72 72" fill="none">
+        <defs>
+          <radialGradient id="sparkGrad2" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#fff" />
+            <stop offset="30%" stop-color="#ffb347" />
+            <stop offset="70%" stop-color="#ff6b35" />
+            <stop offset="100%" stop-color="#e91e8c" />
+          </radialGradient>
+        </defs>
+>>>>>>> parent of 45a4ebf (Deleted files)
         <polygon points="42,4 28,34 38,34 30,68 52,30 40,30" fill="url(#sparkGrad2)" />
       </svg>
       <span class="auth-logo-text">spark</span>
     </div>
     <h2 class="auth-headline">Find your <span class="gradient-text">spark</span></h2>
+<<<<<<< HEAD
     <p class="auth-sub">Authentic connections with real, unfiltered photos taken this month.</p>
+=======
+    <p class="auth-sub">Authentic connections with real, unfiltered photos — taken this month.</p>
+
+>>>>>>> parent of 45a4ebf (Deleted files)
     <div id="login-panel" class="auth-panel">
       <input type="email" id="login-email" class="auth-input" placeholder="Email address" />
       <input type="password" id="login-password" class="auth-input" placeholder="Password" />
@@ -61,10 +109,15 @@
       <div class="auth-divider"><span>or</span></div>
       <button class="btn-outline" onclick="showSignup()">Create Account</button>
     </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of 45a4ebf (Deleted files)
     <div id="signup-panel" class="auth-panel hidden">
       <input type="text" id="signup-name" class="auth-input" placeholder="Your name" />
       <input type="email" id="signup-email" class="auth-input" placeholder="Email address" />
       <input type="password" id="signup-password" class="auth-input" placeholder="Create password" />
+<<<<<<< HEAD
       <select class="auth-input" id="signup-gender"><option value="" disabled selected>I am...</option><option>A woman</option><option>A man</option><option>Non-binary</option></select>
       <button class="btn-primary" onclick="doSignup()">Create Account</button>
       <button class="btn-ghost" onclick="showLogin()">← Back</button>
@@ -79,16 +132,61 @@
     <button class="topbar-icon" onclick="showProfile()"><div class="avatar-mini" id="user-avatar-mini"></div></button>
     <div class="topbar-logo">
       <svg width="22" height="22" viewBox="0 0 72 72" fill="none"><defs><radialGradient id="sparkGrad3" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff"/><stop offset="30%" stop-color="#ffb347"/><stop offset="70%" stop-color="#ff6b35"/><stop offset="100%" stop-color="#e91e8c"/></radialGradient></defs><polygon points="42,4 28,34 38,34 30,68 52,30 40,30" fill="url(#sparkGrad3)" /></svg>
+=======
+      <select class="auth-input" id="signup-gender">
+        <option value="" disabled selected>I am...</option>
+        <option value="woman">A woman</option>
+        <option value="man">A man</option>
+        <option value="nonbinary">Non-binary</option>
+        <option value="other">Other</option>
+      </select>
+      <button class="btn-primary" onclick="doSignup()">Create Account</button>
+      <button class="btn-ghost" onclick="showLogin()">← Back to Sign In</button>
+    </div>
+
+    <p class="auth-terms">By continuing you agree to our <a href="#">Terms</a> & <a href="#">Privacy Policy</a></p>
+  </div>
+</div>
+
+<!-- =================== MAIN APP =================== -->
+<div id="app" class="screen hidden">
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <button class="topbar-icon" onclick="showProfile()">
+      <div class="avatar-mini" id="user-avatar-mini"></div>
+    </button>
+    <div class="topbar-logo">
+      <svg width="22" height="22" viewBox="0 0 72 72" fill="none">
+        <defs>
+          <radialGradient id="sparkGrad3" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#fff" />
+            <stop offset="30%" stop-color="#ffb347" />
+            <stop offset="70%" stop-color="#ff6b35" />
+            <stop offset="100%" stop-color="#e91e8c" />
+          </radialGradient>
+        </defs>
+        <polygon points="42,4 28,34 38,34 30,68 52,30 40,30" fill="url(#sparkGrad3)" />
+      </svg>
+>>>>>>> parent of 45a4ebf (Deleted files)
       <span>spark</span>
     </div>
     <button class="topbar-icon" onclick="showNotifications()">
       <div class="notif-icon">
+<<<<<<< HEAD
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+=======
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+        </svg>
+>>>>>>> parent of 45a4ebf (Deleted files)
         <span class="notif-badge" id="notif-badge">3</span>
       </div>
     </button>
   </header>
 
+<<<<<<< HEAD
   <div class="view-toggle">
     <button class="toggle-btn active" id="btn-swipe" onclick="switchView('swipe')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18"/></svg>Swipe</button>
     <button class="toggle-btn" id="btn-feed" onclick="switchView('feed')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="2" width="9" height="9" rx="1"/><rect x="13" y="2" width="9" height="9" rx="1"/><rect x="2" y="13" width="9" height="9" rx="1"/><rect x="13" y="13" width="9" height="9" rx="1"/></svg>Feed</button>
@@ -119,18 +217,115 @@
 </div>
 
 <!-- MATCH OVERLAY -->
+=======
+  <!-- VIEW TOGGLE -->
+  <div class="view-toggle">
+    <button class="toggle-btn active" id="btn-swipe" onclick="switchView('swipe')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18"/></svg>
+      Swipe
+    </button>
+    <button class="toggle-btn" id="btn-feed" onclick="switchView('feed')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      Feed
+    </button>
+  </div>
+
+  <!-- ===== SWIPE VIEW ===== -->
+  <div id="swipe-view" class="view-section">
+    <div class="card-stack" id="card-stack">
+      <!-- Cards injected by JS -->
+    </div>
+    <div class="swipe-actions">
+      <button class="action-btn action-pass" onclick="swipeCard('left')" id="btn-pass">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <button class="action-btn action-super" onclick="swipeCard('up')" id="btn-super">
+        <svg width="22" height="22" viewBox="0 0 72 72" fill="none">
+          <polygon points="42,4 28,34 38,34 30,68 52,30 40,30" fill="url(#sparkGrad3)" />
+        </svg>
+      </button>
+      <button class="action-btn action-like" onclick="swipeCard('right')" id="btn-like">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ff6b9d" stroke-width="2.5" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </button>
+    </div>
+    <div class="swipe-hint">
+      <span class="hint-pass">← Pass</span>
+      <span class="hint-super">↑ Super Spark</span>
+      <span class="hint-like">Like →</span>
+    </div>
+    <div id="out-of-cards" class="out-of-cards hidden">
+      <div class="ooc-icon">⚡</div>
+      <h3>You've seen everyone nearby!</h3>
+      <p>Check back soon — new sparks appear weekly.</p>
+      <button class="btn-primary" onclick="reloadCards()">Refresh</button>
+    </div>
+  </div>
+
+  <!-- ===== FEED VIEW ===== -->
+  <div id="feed-view" class="view-section hidden">
+    <div class="feed-container" id="feed-container">
+      <!-- Feed posts injected by JS -->
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <button class="nav-btn active" id="nav-home" onclick="navTo('home')">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>Home</span>
+    </button>
+    <button class="nav-btn" id="nav-matches" onclick="navTo('matches')">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      <span>Matches</span>
+      <span class="nav-badge" id="match-badge">5</span>
+    </button>
+    <button class="nav-btn" id="nav-camera" onclick="openCamera()">
+      <div class="camera-btn-wrap">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+      </div>
+      <span>Post</span>
+    </button>
+    <button class="nav-btn" id="nav-chat" onclick="navTo('chat')">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <span>Chat</span>
+      <span class="nav-badge hidden" id="chat-badge">2</span>
+    </button>
+    <button class="nav-btn" id="nav-profile" onclick="navTo('profile')">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>Profile</span>
+    </button>
+  </nav>
+</div>
+
+<!-- =================== OVERLAYS =================== -->
+
+<!-- Match Overlay -->
+>>>>>>> parent of 45a4ebf (Deleted files)
 <div id="match-overlay" class="overlay hidden">
   <div class="match-bg-particles" id="match-particles"></div>
   <div class="match-content">
     <div class="match-spark-anim">⚡</div>
     <h2 class="match-title">It's a <span class="gradient-text">Spark!</span></h2>
     <p class="match-sub">You and <span id="match-name-display"></span> liked each other</p>
+<<<<<<< HEAD
     <div class="match-avatars"><div class="match-avatar" id="match-avatar-you"></div><div class="match-spark-icon">⚡</div><div class="match-avatar" id="match-avatar-them"></div></div>
+=======
+    <div class="match-avatars">
+      <div class="match-avatar" id="match-avatar-you"></div>
+      <div class="match-spark-icon">
+        <svg width="32" height="32" viewBox="0 0 72 72" fill="none">
+          <polygon points="42,4 28,34 38,34 30,68 52,30 40,30" fill="url(#sparkGrad)" />
+        </svg>
+      </div>
+      <div class="match-avatar" id="match-avatar-them"></div>
+    </div>
+>>>>>>> parent of 45a4ebf (Deleted files)
     <button class="btn-primary" onclick="openChat(currentMatch)">Send a Message</button>
     <button class="btn-ghost" onclick="closeMatchOverlay()">Keep Swiping</button>
   </div>
 </div>
 
+<<<<<<< HEAD
 <!-- CAMERA -->
 <div id="camera-overlay" class="overlay hidden">
   <div class="camera-ui">
@@ -147,10 +342,50 @@
     <div id="photo-preview" class="photo-preview hidden">
       <img id="preview-img" src="" alt="Preview" />
       <div class="preview-actions"><button class="btn-ghost" onclick="retakePhoto()">Retake</button><button class="btn-primary" onclick="postPhoto()">Post ⚡</button></div>
+=======
+<!-- Camera Overlay -->
+<div id="camera-overlay" class="overlay hidden">
+  <div class="camera-ui">
+    <div class="camera-header">
+      <button class="camera-close" onclick="closeCamera()">✕</button>
+      <h3>Post a Spark</h3>
+      <div class="weekly-indicator">
+        <span id="weekly-count">1/1 used</span>
+        <span class="premium-tag" id="premium-tag">FREE</span>
+      </div>
+    </div>
+    <div class="camera-viewfinder">
+      <video id="camera-video" autoplay playsinline></video>
+      <canvas id="camera-canvas" class="hidden"></canvas>
+      <div class="viewfinder-overlay">
+        <div class="corner tl"></div>
+        <div class="corner tr"></div>
+        <div class="corner bl"></div>
+        <div class="corner br"></div>
+      </div>
+      <div class="no-filter-badge">NO FILTER</div>
+      <div class="live-badge">LIVE</div>
+    </div>
+    <div class="camera-rules">
+      <div class="rule-item">📷 No filters allowed</div>
+      <div class="rule-item">🚫 No gallery uploads</div>
+      <div class="rule-item">📅 Photo expires in 30 days</div>
+    </div>
+    <button class="camera-shutter" onclick="takePhoto()" id="shutter-btn">
+      <div class="shutter-inner"></div>
+    </button>
+    <div id="photo-preview" class="photo-preview hidden">
+      <img id="preview-img" src="" alt="Preview" />
+      <div class="preview-actions">
+        <button class="btn-ghost" onclick="retakePhoto()">Retake</button>
+        <button class="btn-primary" onclick="postPhoto()">Post ⚡</button>
+      </div>
+>>>>>>> parent of 45a4ebf (Deleted files)
     </div>
   </div>
 </div>
 
+<<<<<<< HEAD
 <!-- CHAT -->
 <div id="chat-screen" class="overlay hidden">
   <div class="chat-ui">
@@ -179,12 +414,88 @@
       <div class="stat-item"><span class="stat-num" id="stat-likes">0</span><span class="stat-label">Likes</span></div>
       <div class="stat-item"><span class="stat-num" id="stat-sparks">0</span><span class="stat-label">Sparks</span></div>
       <div class="stat-item"><span class="stat-num" id="stat-views">0</span><span class="stat-label">Views</span></div>
+=======
+<!-- Chat Screen -->
+<div id="chat-screen" class="overlay hidden">
+  <div class="chat-ui">
+    <div class="chat-header">
+      <button class="back-btn" onclick="closeChat()">←</button>
+      <div class="chat-user-info">
+        <div class="chat-avatar" id="chat-partner-avatar"></div>
+        <div>
+          <div class="chat-partner-name" id="chat-partner-name"></div>
+          <div class="chat-status">Active now</div>
+        </div>
+      </div>
+      <button class="topbar-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+      </button>
+    </div>
+    <div class="chat-messages" id="chat-messages"></div>
+    <div class="chat-input-bar">
+      <button class="chat-icon-btn">😊</button>
+      <input type="text" id="chat-input" class="chat-input" placeholder="Message..." onkeydown="handleChatKey(event)" />
+      <button class="chat-send-btn" onclick="sendMessage()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Matches Screen -->
+<div id="matches-screen" class="overlay hidden">
+  <div class="matches-ui">
+    <div class="screen-header">
+      <button class="back-btn" onclick="closeOverlay('matches-screen')">←</button>
+      <h2>Your Sparks</h2>
+    </div>
+    <div class="matches-new-section">
+      <h3 class="section-label">New Sparks ⚡</h3>
+      <div class="matches-new-list" id="matches-new-list"></div>
+    </div>
+    <div class="matches-messages-section">
+      <h3 class="section-label">Messages</h3>
+      <div class="matches-chat-list" id="matches-chat-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Profile Screen -->
+<div id="profile-screen" class="overlay hidden">
+  <div class="profile-ui">
+    <div class="screen-header">
+      <button class="back-btn" onclick="closeOverlay('profile-screen')">←</button>
+      <h2>My Profile</h2>
+      <button class="btn-ghost-sm" onclick="showPremium()">⚡ Premium</button>
+    </div>
+    <div class="profile-photo-grid" id="profile-photo-grid"></div>
+    <div class="profile-info-section">
+      <div class="profile-name-age" id="profile-name-age"></div>
+      <div class="profile-bio-edit">
+        <textarea class="profile-bio-input" id="profile-bio-input" placeholder="Write something about yourself..." maxlength="150"></textarea>
+      </div>
+    </div>
+    <div class="profile-stats">
+      <div class="stat-item">
+        <span class="stat-num" id="stat-likes">0</span>
+        <span class="stat-label">Likes</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num" id="stat-sparks">0</span>
+        <span class="stat-label">Sparks</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num" id="stat-views">0</span>
+        <span class="stat-label">Views</span>
+      </div>
+>>>>>>> parent of 45a4ebf (Deleted files)
     </div>
     <div class="photo-expiry-notice" id="photo-expiry-notice"></div>
     <button class="btn-danger" onclick="doLogout()">Sign Out</button>
   </div>
 </div>
 
+<<<<<<< HEAD
 <!-- USER PROFILE (from feed) -->
 <div id="user-profile-overlay" class="overlay hidden">
   <div class="user-profile-ui">
@@ -236,11 +547,81 @@
     <div class="premium-pricing">
       <div class="price-card price-card-best"><div class="price-badge">Best Value</div><div class="price-period">6 months</div><div class="price-amount">$7.99<span>/mo</span></div><div class="price-total">$47.99 billed once</div><button class="btn-primary" onclick="subscribePremium('6mo')">Get Started</button></div>
       <div class="price-card"><div class="price-period">1 month</div><div class="price-amount">$14.99<span>/mo</span></div><button class="btn-outline" onclick="subscribePremium('1mo')">Subscribe</button></div>
+=======
+<!-- Premium Screen -->
+<div id="premium-screen" class="overlay hidden">
+  <div class="premium-ui">
+    <button class="premium-close" onclick="closeOverlay('premium-screen')">✕</button>
+    <div class="premium-hero">
+      <div class="premium-spark-anim">⚡</div>
+      <h2>Spark <span class="gradient-text">Premium</span></h2>
+      <p>Unlock the full spark experience</p>
+    </div>
+    <div class="premium-features">
+      <div class="premium-feature">
+        <span class="feature-icon">📷</span>
+        <div>
+          <strong>2 photos per week</strong>
+          <p>Show more of your authentic self</p>
+        </div>
+      </div>
+      <div class="premium-feature">
+        <span class="feature-icon">🚀</span>
+        <div>
+          <strong>Profile Boost</strong>
+          <p>Get seen by 10x more people</p>
+        </div>
+      </div>
+      <div class="premium-feature">
+        <span class="feature-icon">👁️</span>
+        <div>
+          <strong>See who liked you</strong>
+          <p>Never miss a match</p>
+        </div>
+      </div>
+      <div class="premium-feature">
+        <span class="feature-icon">⚡</span>
+        <div>
+          <strong>Unlimited Super Sparks</strong>
+          <p>Stand out from the crowd</p>
+        </div>
+      </div>
+      <div class="premium-feature">
+        <span class="feature-icon">↩️</span>
+        <div>
+          <strong>Rewind swipes</strong>
+          <p>Undo accidental passes</p>
+        </div>
+      </div>
+    </div>
+    <div class="premium-pricing">
+      <div class="price-card price-card-best">
+        <div class="price-badge">Best Value</div>
+        <div class="price-period">6 months</div>
+        <div class="price-amount">$7.99<span>/mo</span></div>
+        <div class="price-total">$47.99 billed once</div>
+        <button class="btn-primary" onclick="subscribePremium('6mo')">Get Started</button>
+      </div>
+      <div class="price-card">
+        <div class="price-period">1 month</div>
+        <div class="price-amount">$14.99<span>/mo</span></div>
+        <button class="btn-outline" onclick="subscribePremium('1mo')">Subscribe</button>
+      </div>
+>>>>>>> parent of 45a4ebf (Deleted files)
     </div>
   </div>
 </div>
 
+<<<<<<< HEAD
 <div id="toast" class="toast hidden"></div>
+=======
+<!-- Notification Toast -->
+<div id="toast" class="toast hidden"></div>
+
+<!-- Particle Canvas -->
+<canvas id="particle-canvas" class="particle-canvas hidden"></canvas>
+
+>>>>>>> parent of 45a4ebf (Deleted files)
 <script src="app.js"></script>
 </body>
 </html>
